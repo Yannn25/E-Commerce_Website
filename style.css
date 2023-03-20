@@ -28,17 +28,22 @@ body {
     height: 100%;
 }
 
-.login-container{
+.log-in-container{
     left: 0;
     width: 50%;
     z-index: 2;
+    
+   
 }
 
 .sign-up-container{
     left: 0;
     width: 50%;
+   
+   
 }
 form{
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +63,7 @@ input{
 }
 
 button.ghost{
-    background-color:transparent;
+    background-color:#A61F69;
     color: #fff;
 }
 
@@ -73,7 +78,7 @@ button{
 }
 button:hover{
     cursor: pointer;
-    background-color: #fff;
+    background-color: whitesmoke;
     color: #A61F69;
 }
 button:active{
@@ -87,8 +92,7 @@ button:active{
     height: 20px;
     width: 20px;
     margin: 5px;
-    
-    
+    text-decoration: none;
 }
 h1{
     margin: 0;
@@ -116,17 +120,16 @@ span{
 }
 
 .overlay{
-    position: relative;
-    background: linear-gradient(#F2CD5C,#F2921D,#A61F69,#400E32);
+   position: relative;
+    /*background: linear-gradient(#F2CD5C,#F2921D,#A61F69,#400E32);*/
     left: -100%;
     height: 100%;
     width: 200%;
-    transform: translateX(0);
+   /* transform: translateX(0);*/
 }
 
 .overlay-panel{
-    position: absolute
-    ;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,6 +149,7 @@ span{
      right: 0;
      transform: translateX(0);
 }
+
 p{
     font-size: 14px;
     font-weight: 100;
