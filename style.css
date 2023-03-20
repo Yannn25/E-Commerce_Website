@@ -1,0 +1,156 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+ }
+body {
+    background: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+ }
+.container{
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+    width: 760px;
+    max-width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 32, 63, 45);
+}
+
+.form-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+}
+
+.login-container{
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.sign-up-container{
+    left: 0;
+    width: 50%;
+}
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+
+input{
+    background-color: cornsilk;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 100%;
+}
+
+button.ghost{
+    background-color:transparent;
+    color: #fff;
+}
+
+button{
+    background-color: #A61F69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 32px;
+    margin-top: 10px;
+    transition: .4s ease-in;
+}
+button:hover{
+    cursor: pointer;
+    background-color: #fff;
+    color: #A61F69;
+}
+button:active{
+    transform: scale(.95);
+}
+
+.social-container a{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 20px;
+    margin: 5px;
+    
+    
+}
+h1{
+    margin: 0;
+    font-size: 24px;
+}
+a{
+    text-decoration: none;
+    font-size: 14px;
+    margin: 8px 0 16px;
+}
+span{
+    font-size: 14px;
+}
+
+
+
+.overlay-container{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.overlay{
+    position: relative;
+    background: linear-gradient(#F2CD5C,#F2921D,#A61F69,#400E32);
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+}
+
+.overlay-panel{
+    position: absolute
+    ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+}
+
+.overlay-left{
+    transform: translateX(-20%);
+}
+.overlay-right{
+     right: 0;
+     transform: translateX(0);
+}
+p{
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: .5px;
+    margin: 20px 0 30px;
+}
+
