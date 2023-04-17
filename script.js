@@ -1,15 +1,25 @@
-function updateFooterPosition() {
-    const footer = document.querySelector('.footer');
-    if (window.innerHeight > footer.offsetTop + footer.offsetHeight) {
-      footer.style.position = 'fixed';
-      footer.style.bottom = '0';
-    } else {
-      footer.style.position = 'static';
-    }
+var ConnectButton = document.getElementById("SwitchtoConnexion");
+var HomeButton = document.getElementById("SwitchtoHome");
+var ContactButton = document.getElementById("SwitchtoContact");
+
+var section1 = document.getElementById("accueil");
+var section2 = document.getElementById("connect");
+
+ConnectButton.addEventListener("click", function() {
+  if (section2.style.display === "none") {
+    section2.style.display = "flex";
+    section1.style.display = "none";
   }
-  
-  // Mettre à jour la position du footer au chargement de la page
-  window.addEventListener('load', updateFooterPosition);
-  
-  // Mettre à jour la position du footer lorsque la taille de la fenêtre change
-  window.addEventListener('resize', updateFooterPosition);
+});
+HomeButton.addEventListener("click", function() {
+  if (section1.style.display === "none") {
+    section1.style.display = "flex";
+    section2.style.display = "none";
+  }
+});
+ContactButton.addEventListener("click", function() {
+  if (section1.style.display === "none") {
+    section1.style.display = "flex";
+    section2.style.display = "none";
+  }
+});
