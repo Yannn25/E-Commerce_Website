@@ -35,7 +35,16 @@
 	text-align: center;
 	padding: 20px;
 }
-
+#jsp{
+    background-color: #FF6464;
+    height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+}
 body{
     font-size: 14px;
     font-weight: 400;
