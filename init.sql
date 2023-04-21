@@ -1,3 +1,10 @@
+--Connect to the PostgreSQL server using the psql command with a, 
+--superuser account or an account that has the CREATEROLE privilege:
+--psql -U postgres
+CREATE DATABASE IF NOT EXISTS shop;
+CREATE USER roni WITH PASSWORD 'mdp';
+GRANT ALL PRIVILEGES ON DATABASE shop TO roni;
+
 -- Création de la table des vêtements
 CREATE TABLE IF NOT EXISTS vetements (
     id SERIAL PRIMARY KEY,
@@ -11,13 +18,23 @@ CREATE TABLE IF NOT EXISTS vetements (
 -- Création de la table des clients
 CREATE TABLE IF NOT EXISTS clients (
     id SERIAL PRIMARY KEY,
-    nom VARCHAR(255),
-    prenom VARCHAR(255),
-    email VARCHAR(255),
-    adresse VARCHAR(255),
-    ville VARCHAR(255),
-    code_postal VARCHAR(10),
-    pays VARCHAR(255)
+    nom VARCHAR(255) NOT NULL,
+    prenom VARCHAR(255) NOT NULL,
+    email VARCHAR(255) ,
+    adresse VARCHAR(255) NOT NULL,
+    ville VARCHAR(255) NOT NULL,
+    code_postal VARCHAR(10) NOT NULL,
+    pays VARCHAR(255),
+    mot_de_passe VARCHAR(255),
+);
+
+-- Création de la table des gérants
+CREATE TABLE gerants (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    mot_de_passe VARCHAR(100) NOT NULL
 );
 
 -- Création de la table des commandes
