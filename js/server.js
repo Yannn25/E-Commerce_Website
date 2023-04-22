@@ -10,6 +10,7 @@ async function run() {
     server.use(express.json());
     server.use(express.urlencoded({extended:true}));
     server.use(express.static('public'));
+    
     server.set('view engine', 'html');
     server.engine('html', require('ejs').renderFile);
 
@@ -19,8 +20,14 @@ async function run() {
         let tab = BDD_shop.affiche_all();
         res.render('accueil.html', tab); 
     });
+    server.get('/index', (req,res) => {
+        res.render('index2.html'); 
+    });
     server.get('/gerant', (req,res) => {
         res.render('Gérant.html'); 
+    });
+    server.get('/login', (req,res) => {
+        res.render('login.html');
     });
 
 

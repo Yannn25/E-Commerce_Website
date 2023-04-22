@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title> ACCUEIL </title>
-        <!-- Bootstrap -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <!-- CSS et JS -->
-        <link rel="stylesheet" href="../CSS/style.css">
-        <link rel="stylesheet" href="../CSS/bootstrap.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <script src="../js/server.js"></script>
-        <script src="../js/accueil.js"></script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title> ACCUEIL </title>
+      <!-- Bootstrap -->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <!-- CSS et JS -->
+      <link rel="stylesheet" href="../CSS/bootstrap.css">
+      <link rel="stylesheet" href="../CSS/accueil.css">
+      <link rel="stylesheet" href="../CSS/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+      <script src="../js/server.js"></script>
+      <script src="../js/accueil.js"></script>
     </head>
     <body>
-        <!-- Bar de navigation (pour le moment)-->
-        <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>                        
-              </button>
-              <a class="navbar-brand" href="#">Logo</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" id="SwitchtoHome">HOME</a></li>
-                <li><a href="#" id="SwitchtoConnexion">CLIENT</a></li>
-                <li><a href="#contact" id="SwitchtoContact">CONTACT</a></li>
-                <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
-                  <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Merchandise</a></li>
-                    <li><a href="#">Extras</a></li>
-                    <li><a href="#">Media</a></li> 
-                  </ul>
-                </li>
-                <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
-              </ul>
+      <nav class="navbar navbar-expand-lg navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">Logo</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-left">
+              <li><a href="#" id="SwitchtoHome">HOME</a></li>
+              <li><a href="/login" id="SwitchtoConnexion">CLIENT</a></li>
+              <li><a href="#contact" id="SwitchtoContact">CONTACT</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Merchandise</a></li>
+                  <li><a href="#">Extras</a></li>
+                  <li><a href="#">Media</a></li> 
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!--<form class="navbar-form navbar-right" action="#">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div> 
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form> -->
+            <div class="d-flex justify-content-center ml-auto" id="Commandes">
+              <a id="compte" href="/login"><i class="bi bi-person"></i></a>
+              <a id="like" href="favoris.html"><i class="bi bi-heart"></i></a> <!--surment a supprimer -->
+              <a id="panier" href="panier.html"><i class="bi bi-basket3"></i></a>
             </div>
           </div>
-          <div class="d-flex justify-content-end ml-auto" id="Commandes">
-            <a id="compte" href="compte.html"><i class="bi bi-person"></i></a>
-            <a id="like" href="favoris.html"><i class="bi bi-heart"></i></a>
-            <a id="panier" href="panier.html"><i class="bi bi-basket3"></i></a>
-          </div>
-        </nav>
-  
-             
-        <!--affichage des articles-->
+      </nav>           
+      <!--affichage des articles-->
+      <section id="accueil">
         <table class="table table-image">
           <thead class="thead-dark">
             <tr class="text-center">
@@ -80,6 +84,10 @@
             </tr>
           </thead>
         </table>
+      </section>
+
+      
+
       <!-- a retirer peut etre -->
       <section id="jsp">
         <h2>Juste pour tester la flèche</h2>
@@ -87,8 +95,8 @@
       </section>
   
       <footer class="text-center">
-        <a class="up-arrow" href="index2.html" data-toggle="tooltip" title="TO TOP">
-          <span class="glyphicon glyphicon-chevron-up"></span>
+        <a class="up-arrow" href="/" data-toggle="tooltip" title="TO TOP">
+          <span class="bi bi-chevron-compact-up"></span>
         </a><br>
         <p>Website made By Emmou Coffi Marie-Tiffany & Edikeu Yann </p> 
       </footer>
