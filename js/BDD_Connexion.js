@@ -1,3 +1,5 @@
+
+
 function BDD_shop () {
     const pg = require('pg');
     const pool = new pg.Pool({
@@ -13,15 +15,17 @@ function BDD_shop () {
     this.connect = async function() {
         bdd = await pool.connect();
         console.log("Connexion Base de Donnes reussi");
-    }
+    };
 
-    this.affiche_all = async function() {
-        let t = []
-        //const result = bdd.query('SELECT * FROM vetements');
-       // for(let w of result.rows)
-        //    t.push(w.word);
-        return t;
-    }
+    this.recupererVetements = async function() {
+        this.connect();
+        try {
+            const query = await bdd.query('SELECT * FROM VETEMENTS');
+            return query.rows;
+        } finally {
+            bdd.release();
+        }
+    };
 
 }
 
