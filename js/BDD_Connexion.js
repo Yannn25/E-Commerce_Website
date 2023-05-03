@@ -1,5 +1,3 @@
-
-
 function BDD_shop () {
     const pg = require('pg');
     const pool = new pg.Pool({
@@ -20,13 +18,39 @@ function BDD_shop () {
     this.recupererVetements = async function() {
         this.connect();
         try {
-            const query = await bdd.query('SELECT * FROM VETEMENTS');
+            const query = await bdd.query('SELECT * FROM vetements');
+            return query.rows;
+        } finally {
+            bdd.release();
+        }
+    };
+    this.recupererTaillesDisponibles = async function() {
+        this.connect();
+        try {
+            const query = await bdd.query('SELECT * FROM stocks');
             return query.rows;
         } finally {
             bdd.release();
         }
     };
 
+    // this.TaillesUnArticle = async function() {
+    //     this.connect();
+    //     try {
+    //         const query = await bdd.query('SELECT taille FROM vetements');
+    //     }
+    // }
+
+    this.GerantLog = async function(nom, mdp) {
+        this.connect();
+        try {
+            const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
+            console.log(query.rowCount);
+            return query.rowCount;
+        } finally {
+            bdd.release();
+        }
+    }
 }
 
 module.exports = new BDD_shop();

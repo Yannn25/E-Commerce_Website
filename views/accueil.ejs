@@ -23,22 +23,39 @@
       <!--affichage des articles-->
       <section id="accueil">
         <table id="tableau-vetements" class="table table-image">
-          <thead class="thead-dark">
+          <thead class="thead-light">
             <tr class="text-center">
-              <%= contenuHTML %>
+              <% let i;
+              for (i = 0; i < contenus.length; i++) { 
+                %>
+                <td>
+                  <div class="card">
+                    <img src="'<%= contenus[i].image %>'" alt="'<%= contenus[i].nom %>'" style="width:100%">
+                    <h1><%= contenus[i].nom%></h1>
+                    <p class="price"><%= contenus[i].prix %></p>
+                    <p><%= contenus[i].description %></p>
+                    <select id="taille-select">
+                      <% for (let j = 0; j < tailles.length; j++) { %>
+                        <% if (tailles[j].quantite > 0 && tailles[j].id_vetement == contenus[i].id) { %> 
+                          <option value="<%= tailles[j].taille %>"><%= tailles[j].taille %></option>
+                        <% } %>
+                      <% } %>
+                    </select>
+                    <p><button class="panier_button"><i class="bi bi-cart-plus-fill"></i></button></p>
+                  </div>
+                </td>
+              <% } %>
             </tr>
           </thead>
         </table>
       </section>
-
+      <img src="../img/img_image1.png" alt="img" style="width:100%">
       <!-- a retirer peut etre -->
       <section id="jsp">
         <h2>Juste pour tester la flèche</h2>
         <p>clique sur la flèche tout en bas ça fait revenir en haut</p>
       </section>
   
-    
-      
     <%- include('partials/footer.html') %>
     </body>
 </html>

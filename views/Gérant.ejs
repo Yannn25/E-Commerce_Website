@@ -12,11 +12,40 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <!-- CSS et JS -->
         <link rel="stylesheet" href="gerant.css">
-        <script src="server.js"></script>
+        <script src="../js/server.js"></script>
     </head>
     <body>
         <%- include('partials/navbar.html') %>
-        <p>Connexion Gérant</p>
+        <% if(!connect) { %>
+            <%- include('partials/GerantLogin.ejs') %>
+        <% } else { %>
+            <h1>Bienvenue <%= nom %></h1>
+            <p><button>switch</button></p>
+            <% let i;
+              for (i = 0; i < contenus.length; i++) { 
+                %>
+                <td>
+                  <div class="card">
+                    <img src="'<%= contenus[i].image %>'" alt="'<%= contenus[i].nom %>'" style="width:100%">
+                    <h1><%= contenus[i].nom%></h1>
+                    <p class="price"><%= contenus[i].prix %></p>
+                    <p><%= contenus[i].description %></p>
+                    <select id="taille-select">
+                      <option value="XS">XS</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL">XXL</option>
+                    </select>
+                    <p>
+                      <input type="text" name="quantite" placeholder="quantité">
+                      <button class="add_taille"><i class="bi bi-plus-square"></i></button>
+                    </p>
+                  </div>
+                </td>
+              <% } %>
+        <% } %>
         <%- include('partials/footer.html') %>
     </body>
 </html>
