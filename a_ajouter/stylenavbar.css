@@ -11,8 +11,17 @@ nav{
     align-items: center;
     padding: 15px 25px;
     background-color: #FFFAF4;
-    
     box-shadow: inset 0px -1px 0px #EBD8B2;
+}
+.user-articles{
+    display: block;
+    cursor: pointer;
+    border: none;
+    transition: all .4s ease-out;
+    color: #E9A178;
+}
+.user-articles:hover{
+    color: #A84448;
 }
 
 .dropdown {
@@ -25,8 +34,9 @@ nav{
     background-color: #FFE5CA;
     min-width: 160px;
     z-index: 1;
+    border-radius: 5px;
   }
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content,.dropdown-panier:hover .dropdown-content {display: block;}
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -121,6 +131,7 @@ nav{
     }
     .nav-icon span{font-size: 22px;} 
 
+    .dropdown-panier:hover .dropdown-content {display: none;}
     .navlinks-container{
         display: flex;
         flex-direction: column;
