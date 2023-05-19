@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS stocks (
   taille VARCHAR(3) NOT NULL,
   quantite INT NOT NULL DEFAULT 0,
   PRIMARY KEY (id, taille),
-  FOREIGN KEY (id) REFERENCES Vetements(id)
+  FOREIGN KEY (id) REFERENCES Vetements(id_vetement)
 );
 
 -- Création de la table des clients
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS clients (
     ville VARCHAR(255) NOT NULL,
     code_postal VARCHAR(10) NOT NULL,
     pays VARCHAR(255),
-    mot_de_passe VARCHAR(255),
+    mot_de_passe VARCHAR(255)
 );
 
 -- Création de la table des gérants
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS gerants (
 CREATE TABLE IF NOT EXISTS commandes (
     id SERIAL PRIMARY KEY,
     client_id INTEGER REFERENCES clients (id),
-    vetement_id INTEGER REFERENCES vetements (id),
+    vetement_id INTEGER REFERENCES vetements (id_vetement),
     date_commande DATE,
     quantite INTEGER
 );
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS commandes (
 INSERT INTO vetements (nom, description, prix, image) VALUES 
     ('Chemise', 'Chemise en coton avec motif à carreaux', 29.99,'../img/products_img/product-4.jpg'),
     ('T-shirt', 'T-shirt en coton uni', 19.99,'../img/products_img/product-4.jpg'),
-    ('Pantalon', 'Pantalon en denim avec coupe droite', 49.99,'../img/products_img/product-4.jpg');
+    ('Pantalon', 'Pantalon en denim avec coupe droite', 49.99,'../img/products_img/product-4.jpg'),
     ('Chemise', 'Chemise en coton à rayures', 29.99,'../img/products_img/product-4.jpg'),
     ('T-shirt', 'T-shirt en coton à motifs', 19.99,'../img/products_img/product-4.jpg'),
     ('Pantalon', 'Pantalon en lin avec coupe droite', 49.99,'../img/products_img/product-4.jpg'),
@@ -73,7 +73,7 @@ INSERT INTO vetements (nom, description, prix, image) VALUES
     ('Jupe', 'Jupe en cuir avec fermeture éclair', 39.99,'../img/products_img/product-4.jpg'),
     ('Pull', 'Pull en laine avec col roulé', 49.99,'../img/products_img/product-4.jpg'),
     ('Jean', 'Jean en cuir avec lacets', 79.99,'../img/products_img/product-4.jpg');
-INSERT INTO stocks(id_vetement,taille,quantite) VALUES
+INSERT INTO stocks(id,taille,quantite) VALUES
     (1,'S',4),
     (1,'L',3),
     (1,'M',4),
@@ -81,7 +81,7 @@ INSERT INTO stocks(id_vetement,taille,quantite) VALUES
     (2,'L',2),
     (2,'M',1),
     (2,'XS',1),
-    (3,'XXL',2);
+    (3,'XXL',2),
     (4,'M',6),
     (4,'L',5),
     (4,'XL',2),

@@ -26,7 +26,7 @@ async function run() {
     const contenus = await RecupVetements();  
     //console.log(contenus);
     const tailles = await BDD_shop.recupererTaillesDisponibles();
-    res.render('accueil.ejs', { contenus, tailles });
+    res.render('../views/accueil.ejs', { contenus, tailles });
   });
   server.get('/product:id'), async (req,res) => {
     const id = req.params.id;
@@ -37,8 +37,10 @@ async function run() {
   server.get('/gerant', (req,res) => {
     res.render('Gérant.ejs', {connect : false}); 
   });
+
+  server.set('view engine', 'ejs');
   server.get('/login', (req,res) => {
-    res.render('login.ejs');
+    res.render('login');
   });
   server.post('/loginUser', (req,res) => {
     res.render('login.ejs');
@@ -66,5 +68,8 @@ async function run() {
   server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
+
+
 }
 run();
+
