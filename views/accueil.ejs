@@ -16,6 +16,7 @@
       <link rel="stylesheet" href="../CSS/style.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
       <script src="../js/server.js"></script>
+      <script src="../js/panier.js" ></script>
       <script src="../js/accueil.js"></script>
     </head>
     <body>
@@ -61,7 +62,11 @@
                         <% } %>
                       <% } %>
                     </select>
-                    <p><button class="panier_button"><i class="bi bi-cart-plus-fill"></i></button></p>
+                    <p>
+                      <button class="panier_button" data-id="<%= contenus[i].id_vetement %>" data-name="<%= contenus[i].nom %>" data-price="<%= contenus[i].prix%>" data-url="/">
+                        <i class="bi bi-cart-plus-fill"></i>
+                      </button>
+                    </p>
                   </div>
                 </td>
               <% } %>

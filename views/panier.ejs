@@ -7,14 +7,24 @@
         <!-- Bootstrap -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../public/CSS/style.css">
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        
+        <script src="../js/panier.js"></script>
     </head>
     <body>
-
-        <p> Panier </p>
- 
+        <%- include('partials/navbar.html') %>
+        <table class="table">
+            <thead>
+                <tr><th>Article</th><th>Prix</th><th>Quantité</th></tr>
+            </thead>
+            <tbody id="cart-tablebody"></tbody>
+        </table>
+        
+        <p>Total : <span class="subtotal"></span>€</p>
+        
+        <button id="confirm-command">Passer la commande</button>
+        <%- include('partials/footer.html') %>
     </body>
 </html>

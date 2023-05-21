@@ -38,9 +38,40 @@ async function run() {
   server.get('/login', (req,res) => {
     res.render('login');
   });
-  server.post('/loginUser', (req,res) => {
-    res.render('login.ejs');
+  server.post('/login', async (req,res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    console.log(email, password);
+    const exits = await BDD_shop.Login(email, password);
+    console.log(exits);
+    console.log(exits == 1);
+    if(exits == 1) {
+       res.redirect('/');
+    } else {
+        res.render('login.ejs');//tenter un msg d'erreur
+    }
   });
+  server.post('/signUp', async (req,res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    // Vérifier si l'utilisateur existe déjà
+    const userExists = await BDD_shop.Login(email, password);
+    if (userExists == 1) {
+      // L'utilisateur existe déjà, gérer le cas en conséquence
+      res.render('login.ejs', { error: 'User already exists' });
+      return;
+    }
+    const fullName = req.body.fullName;
+    // Divise la chaîne fullName en nom et prénom
+    const nameParts = fullName.split(' ');
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(' ');
+    const exits = await BDD_shop.SignUp(firstName, lastName,email, password);
+    //On tente une connexion pour etre sur que l'user est bien insert
+    //res.redirect(307,'/login');
+    res.redirect('/');
+  });
+
   server.post('/gerant', async (req,res) => {
     let {nom, mdp} = req.body;
     //console.log({nom,mdp});
@@ -53,6 +84,7 @@ async function run() {
     //    res.render('Gerant.ejs', {connect : true});
     // }
   });
+
   server.get('/gerant/stocks', async (req, res) => {
     const contenus = await RecupVetements();
     res.render('Gerant.ejs', { connect : true,stocks: true, contenus });
@@ -62,12 +94,6 @@ async function run() {
     const quantite = req.body.quantite; 
     const taille = req.body.taille;
     console.log('id : %d\nquant: %d\ntaille: %s\n', idVetement, quantite, taille);
-
-    if (quantite === '' || isNaN(parseInt(quantite))) {
-      console.error('La quantité fournie est invalide.');
-      res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
-      return;
-    }
     try {
       await BDD_shop.AjoutStock(idVetement, quantite, taille);
       res.redirect('/gerant/stocks');
@@ -76,8 +102,6 @@ async function run() {
       res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
     }
   });
-  
-  
   
   server.get('/gerant/commandes', async (req, res) => {
     const commandes = await BDD_shop.AllCommands();

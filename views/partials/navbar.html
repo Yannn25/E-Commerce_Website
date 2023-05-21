@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="../../public/CSS/stylenavbar.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
         <script src="../../js/server.js"></script>
+        <script src="../../js/panier.js"></script>
         <script src="../../js/scriptnavbar.js"></script>
         <script src="../../js/accueil.js"></script>
     </head>
@@ -58,12 +59,12 @@
  
              <div class="dropdown-panier">
                <a id="panier" class="user-articles" href="/panier"><i class="bi bi-basket3 fa-2x"></i></a>
-               <div class="dropdown-content">
-                   <a href="#">artice1</a>
-                   <a href="#">aticle 2</a>
-                   <a href="#">article 3</a>
-                   <p>Total : {50$}</p>
-               </div>
+                <div class="dropdown-content">
+                  <ul id="cart-dropdown" hidden>
+                    <li id="empty-cart-msg"><a>Votre panier est vide</a></li>
+                    <li class="go-to-cart hidden"><a href="/panier/">Voir le panier</a></li>
+                  </ul>
+                </div>
              </div>
              
              <div class="regist-btn">
