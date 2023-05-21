@@ -9,6 +9,7 @@ async function run() {
   server.use(bodyParser.json());
   server.use(express.json());
   server.use(express.urlencoded({extended:true}));
+  server.use(bodyParser.urlencoded({ extended: false }));
   server.use(express.static('public'));
     
   server.set('view engine', 'html');
@@ -18,7 +19,6 @@ async function run() {
 
   async function RecupVetements() {
     const vetements = await BDD_shop.recupererVetements();
-    console.log(vetements);
     return vetements;
   }
 
@@ -34,8 +34,9 @@ async function run() {
   server.get('/index', (req,res) => {
     res.render('index2.ejs',);
   });
-  server.get('/gerant', (req,res) => {
-    res.render('Gérant.ejs', {connect : false}); 
+  server.get('/gerant', async (req,res) => {
+    const contenus = await RecupVetements();
+    res.render('Gérant.ejs', {connect : false, stocks :true, nom : "test", contenus}); 
   });
   server.get('/login', (req,res) => {
     res.render('login.ejs');
@@ -48,14 +49,51 @@ async function run() {
     //console.log({nom,mdp});
     const exits = await BDD_shop.GerantLog(nom,mdp);
     //console.log(exits);
-    //console.log(exits == 1);
+    console.log(exits == 1);
     if(exits == 1) {
-      const contenus = await RecupVetements();
-      res.render('Gérant.ejs',{connect : true, nom, contenus});
-    } else {
-      res.render('Gérant.ejs', {connect : false});
+      res.redirect('/gerant/stocks');
+     } else {
+       res.render('Gérant.ejs', {connect : false,nom, contenus});
     }
   });
+  server.get('/gerant/stocks', async (req, res) => {
+    const contenus = await RecupVetements();
+    res.render('Gérant.ejs', { stocks: true, contenus });
+  });
+  server.post('/gerant/AddStocks', async (req, res) => {
+    const idVetement = req.body.idVetement;
+    const quantite = req.body.quantite; 
+    const taille = req.body.taille;
+    console.log('id : %d\nquant: %d\ntaille: %s\n', idVetement, quantite, taille);
+
+    if (quantite === '' || isNaN(parseInt(quantite))) {
+      console.error('La quantité fournie est invalide.');
+      res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
+      return;
+    }
+    try {
+      await BDD_shop.AjoutStock(idVetement, quantite, taille);
+      res.redirect('/gerant/stocks');
+    } catch (error) {
+      console.error('Une erreur s\'est produite lors de l\'ajout de stock :', error);
+      res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
+    }
+  });
+  
+  
+  
+  server.get('/gerant/commandes', async (req, res) => {
+    const commandes = await BDD_shop.AllCommands();
+    res.render('Gérant.ejs', {stocks : false, commandes});
+  });
+  server.post('/gerant/supprimer-commande', async (req, res) => {
+    const commandeId = req.body.commandeId;
+    await BDD_shop.SuppCommand(commandeId); 
+    // Rediriger vers la page /gerant/commandes pour afficher la liste mise à jour des commandes
+    res.redirect('/gerant/commandes');
+    //307 pour redirect avec post
+  });
+  
   server.get('/panier', (req,res) => {
     res.render('panier.ejs');
   });
