@@ -12,10 +12,9 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <!-- CSS et JS -->
         <link rel="stylesheet" href="../public/CSS/login.css">
-        <script src="../js/server.js"></script>
     </head>
     <body>
-        <%- include('partials/navbar.html') %>
+       
         <% if(!connect) { %>
             <%- include('partials/GerantLogin.ejs') %>
         <% } else { %>
@@ -46,6 +45,6 @@
                 </td>
               <% } %>
         <% } %>
-        <%- include('partials/footer.html') %>
+        
     </body>
 </html>
