@@ -13,7 +13,6 @@ function BDD_shop () {
 
     this.connect = async function() {
         bdd = await pool.connect();
-        console.log("Connexion Base de Donnes reussi");
     };
 
     this.recupererVetements = async function() {

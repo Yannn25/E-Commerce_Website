@@ -1,4 +1,6 @@
 const BDD_shop = require('./BDD_Connexion');
+const Panier = require('./panier.js');
+
 
 async function run() {
   const hostname = 'localhost';
@@ -14,8 +16,6 @@ async function run() {
   server.set('view engine', 'ejs');
   server.use(express.static('js'));
 
-  //server.set('view engine', 'html');
-  //server.engine('html', require('ejs').renderFile);
   await BDD_shop.connect();      
   async function RecupVetements() {
     const vetements = await BDD_shop.recupererVetements();
@@ -23,7 +23,6 @@ async function run() {
   }
   server.get('/', async (req,res) => {
     const contenus = await RecupVetements();  
-    //console.log(contenus);
     const tailles = await BDD_shop.recupererTaillesDisponibles();
     res.render('accueil.ejs', { contenus, tailles });
   });
@@ -67,9 +66,7 @@ async function run() {
     const firstName = nameParts[0];
     const lastName = nameParts.slice(1).join(' ');
     const exits = await BDD_shop.SignUp(firstName, lastName,email, password);
-    //On tente une connexion pour etre sur que l'user est bien insert
-    //res.redirect(307,'/login');
-    res.redirect('/');
+    res.redirect('/favoris');
   });
 
   server.post('/gerant', async (req,res) => {
@@ -118,6 +115,22 @@ async function run() {
   server.get('/panier', (req,res) => {
     res.render('panier.ejs');
   });
+  server.post('/addPanier', (req, res) => {
+    // Récupérer les données du produit à ajouter au panier depuis la requête
+    const produit = {
+      id: req.body.id,
+      nom: req.body.nom,
+      prix: req.body.prix,
+      qte : req.body.quantite,
+      taille : req.body.taille,
+    };
+    console.log(produit);
+    // Créer une instance de la classe Panier
+    const panier = new Panier();
+    panier.addProduitPanier(produit);
+    panier.savePanier();
+    res.send('Produit ajouté au panier avec succès');
+  });
   server.get('/favoris', (req,res) => {
     res.render('favoris.ejs');
   });
@@ -125,8 +138,6 @@ async function run() {
   server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
-
-
 }
 run();
 
