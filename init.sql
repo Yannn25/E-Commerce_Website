@@ -47,8 +47,10 @@ CREATE TABLE IF NOT EXISTS commandes (
     id SERIAL PRIMARY KEY,
     client_id INTEGER REFERENCES clients (id),
     vetement_id INTEGER REFERENCES vetements (id_vetement),
-    date_commande DATE,
-    quantite INTEGER
+    date_livraison VARCHAR(16),
+    quantite INT,
+    taille VARCHAR(4),
+    numero_commande VARCHAR(128)
 );
 
 CREATE TABLE IF NOT EXISTS favori (
@@ -65,7 +67,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE clients TO roni;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE gerants TO roni;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE commandes TO roni;
 GRANT USAGE, SELECT ON SEQUENCE clients_id_seq TO roni;
-
+GRANT USAGE, SELECT ON SEQUENCE commandes_id_seq TO roni;
 -- Insertion de données initiales dans la table des vêtements
 INSERT INTO vetements (nom, description, prix, image) VALUES 
     ('Chemise', 'Chemise en coton avec motif à carreaux', 29.99,'../img/products_img/product-4.jpg'),

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title> COMMANDES </title>
+        <!-- Bootstrap -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="../js/panier.js"></script>
+        <link rel="stylesheet" href="../public/CSS/style.css">
+    </head>
+    <body>
+        <%- include('partials/navbar.html') %>
+        <br><br><br><br><br><br><br><br><br><br><br>
+        <p><h1>Veuillez Remplir les Informations suivantes</h1></p>
+        <form action="/sendCommandes" method="POST">
+            <label for="nom">Nom :</label>
+            <p><input type="text" id="nom" name="nom" autocomplete="off" required></p>
+            <label for="prenom">Prénom :</label>
+            <p><input type="text" id="prenom" name="prenom" autocomplete="off" required></p>
+            <label for="adresse">Adresse :</label>
+            <p><input type="text" id="adresse" name="adresse" autocomplete="off" required></p>
+            <label for="email">Adresse email :</label>
+            <p><input type="email" id="email" name="email" autocomplete="off" required></p>
+            <label for="heure_livraison">Heure de livraison souhaitée :</label>
+            <p><input type="datetime" id="heure_livraison" name="heure_livraison" autocomplete="off" required ></p>
+            <button type="submit">Passer la commande</button>
+          </form>                  
+        <%- include('partials/footer.html') %>
+    </body>
+</html>

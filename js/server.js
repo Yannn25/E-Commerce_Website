@@ -143,14 +143,56 @@ async function run() {
   server.post('/updateQuantity', (req, res) => {
     const qte = parseInt(req.body.qte);
     const productId  = req.body.id;
-    console.log(productId, qte);
+    const taille = req.body.taille
+    const product = {
+      id: productId,
+      taille: taille
+    }
+    console.log(product, qte);
     const panier = new Panier();
     // Mettre à jour la quantité du produit dans le panier
-    panier.changeQuantite(productId,qte);
+    panier.changeQuantite(product, qte);
     panier.savePanier();
     res.redirect('/panier');
   });
-
+  server.get('/Commandes', (req,res) => {
+    const panier = new Panier();
+    res.render('Commandes.ejs', panier);
+  });
+  server.post('/sendCommandes', async (req,res) => {
+    const { nom, prenom, adresse, email, heure_livraison} = req.body;
+    const panier = new Panier();
+    // Vérifier si le client existe déjà dans la base de données
+    const clientExists = await BDD_shop.verifClients(nom, email);
+    if (clientExists === 0) {
+      // Si le client n'existe pas, l'ajouter à la base de données
+      await BDD_shop.insertDefaultClients(nom, prenom, email, adresse);
+    }
+    const id_client = await BDD_shop.selectClient(nom,email);
+    // Parcourir chaque produit dans le panier
+    for (const produit of panier.panier) {
+      const { id, taille, qte } = produit;
+      // Vérifier la disponibilité de la quantité demandée en stock
+      const stockAvailable = await BDD_shop.verifStocks(id, taille, qte);
+      if (stockAvailable === 0) {
+        // Si la quantité n'est pas disponible, afficher un message d'erreur ou rediriger l'utilisateur
+        res.render('confirmation.ejs' ,{check: `Quantité demandée indisponible pour le produit ${id} de taille ${taille}`});
+      }
+    }
+    const numeroCommande = panier.generateUniqueOrderNumber(id_client);
+    for (let produit of panier.panier) {
+      const id_vetement = produit.id;
+      const taille = produit.taille;
+      const quantite = produit.qte;
+      // Insertion de la commande dans la BDD et update du STOCKS
+      await BDD_shop.passCommand(id_client, id_vetement, heure_livraison, taille, quantite, numeroCommande);
+      await BDD_shop.updateStock(id_vetement, taille, quantite);
+    }
+    panier.clearPanier();
+    res.render('confirmation.ejs', {check : "Votre commande est bien passer"});
+  });
+  server.get('/confirmation', (req,res) => {
+  });
   server.get('/favoris', (req,res) => {
     res.render('favoris.ejs');
   });

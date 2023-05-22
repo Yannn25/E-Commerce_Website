@@ -23,7 +23,7 @@ class Panier {
             produit.qte = 1;
             this.panier.push(produit);
         } else {
-            let foundproduit = this.panier.find(p => p.id === produit.id);
+            let foundproduit = this.panier.find(p => p.id === produit.id && p.taille === produit.taille);
             if (foundproduit !== undefined) {
               foundproduit.qte++;
             } else {
@@ -36,12 +36,12 @@ class Panier {
       
 
     removeProduitPanier(produit) {
-        this.panier = this.panier.filter(p => p.id != produit.id);
+        this.panier = this.panier.filter(p => p.id !== produit.id || p.taille !== produit.taille);
         this.savePanier();
     }
 
-    changeQuantite(idproduit, quantite) {
-        let foundproduit = this.panier.find(p => p.id === idproduit);
+    changeQuantite(produit, quantite) {
+        let foundproduit = this.panier.find(p => p.id === produit.id && p.taille === produit.taille);
         if (foundproduit !== undefined) {
             foundproduit.qte += parseInt(quantite);
             if (foundproduit.qte <= 0) {
@@ -75,38 +75,18 @@ class Panier {
         }
     }
 
+    generateUniqueOrderNumber(id_client) {
+        const timestamp = new Date().getTime();
+        const nbProduits = this.getNbProduitPanier();
+        // Générer une valeur aléatoire entre 100 et 999
+        const random = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+        // Concaténer toutes les valeurs pour former le numéro de commande
+        const numeroCommande = `${timestamp}_${id_client}_${nbProduits}_${random}`;
+        return numeroCommande;
+    }
+
+    clearPanier = function() {
+        localStorage.clear();
+    }
+
 } module.exports = Panier;
-
-// const subtotal = document.querySelector(".subtotal");
-// const confirmButton = document.getElementById("confirm-command");
-
-// // Récupérez le panier et les informations nécessaires
-// const panier = getPanier();
-// const nbProduits = getNbProduitPanier();
-// const prixTotal = getPrixTotal();
-
-// // Affichez les informations du panier dans le tableau
-// panier.forEach(produit => {
-//   const row = document.createElement("tr");
-//   const nomCol = document.createElement("td");
-//   nomCol.textContent = produit.nom;
-//   const prixCol = document.createElement("td");
-//   prixCol.textContent = produit.prix;
-//   const quantiteCol = document.createElement("td");
-//   quantiteCol.textContent = produit.qte;
-
-//   row.appendChild(nomCol);
-//   row.appendChild(prixCol);
-//   row.appendChild(quantiteCol);
-
-//   tableBody.appendChild(row);
-// });
-
-// // Affichez le prix total
-// subtotal.textContent = prixTotal;
-
-// const button = document.getElementById("confirm-command");
-// button.addEventListener("click", () => {
-//   // Redirigez vers l'URL "/panier/commandes"
-//   window.location.href = "/panier/commandes";
-// });

@@ -14,24 +14,16 @@ function BDD_shop () {
     this.connect = async function() {
         bdd = await pool.connect();
     };
-
+    //AFFICHAGE
     this.recupererVetements = async function() {
         this.connect();
-        try {
-            const query = await bdd.query('SELECT * FROM vetements');
-            return query.rows;
-        } finally {
-          //  bdd.release();
-        }
+        const query = await bdd.query('SELECT * FROM vetements');
+        return query.rows;
     };
     this.recupererTaillesDisponibles = async function() {
         this.connect();
-        try {
-            const query = await bdd.query('SELECT * FROM stocks');
-            return query.rows;
-        } finally {
-           // bdd.release();
-        }
+        const query = await bdd.query('SELECT * FROM stocks');
+        return query.rows;
     };
 
     // this.TaillesUnArticle = async function() {
@@ -41,42 +33,27 @@ function BDD_shop () {
     //     }
     // }
 
+    //GERANT
     this.GerantLog = async function(nom, mdp) {
        this.connect();
-        try {
-            const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
-            return query.rowCount;
-        } finally {
-            //bdd.release();
-        }
+        const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
+        return query.rowCount;
     }
     this.AjoutStock = async function(id_vetement, quantite, taille) {
         this.connect();
-        try {
-            const query = await bdd.query('INSERT INTO stocks(id,taille,quantite) VALUES($1, $2, $3)', [id_vetement, taille, quantite]);
-          //return query;
-        } finally {
-          //bdd.release();
-        }
+        const query = await bdd.query('INSERT INTO stocks(id,taille,quantite) VALUES($1, $2, $3)', [id_vetement, taille, quantite]);
     }
-      
     this.AllCommands = async function() {
         this.connect();
-        try {
-            const query = await bdd.query('SELECT * FROM commandes');
-            return query.rows;
-        } finally {
-        }
+        const query = await bdd.query('SELECT * FROM commandes');
+        return query.rows;
     }
     this.SuppCommand = async function(id_command) {
         this.connect();
-        try {
-            const query = await bdd.query('DELETE FROM commandes WHERE id = $1', [id_command]);
-            //console.log(query.rowCount);
-        } finally {
-           // bdd.release();
-        }
+        const query = await bdd.query('DELETE FROM commandes WHERE id = $1', [id_command]);
+           
     }
+    //LOGIN ET SIGNUP
     this.Login = async function(mail, pswd) {
         this.connect();
         const query = await bdd.query('SELECT * FROM clients WHERE email = $1 AND mdp= $2', [mail, pswd]);
@@ -85,6 +62,35 @@ function BDD_shop () {
     this.SignUp = async function(nom, prenom, mail, pswd) {
         this.connect();
         const query = await bdd.query('INSERT INTO clients(nom,prenom,email,mdp) VALUES ($1,$2,$3,$4)', [nom,prenom, mail, pswd]);
+    }
+
+    //COMMANDES
+    this.verifStocks = async function(id_vetement, taille, qte) {
+        this.connect();
+        const query = await bdd.query('SELECT * FROM stocks WHERE id = $1 AND taille = $2 AND quantite > $3', [id_vetement, taille, qte]);
+        return query.rowCount;
+    }
+    this.updateStock = async function(id_vetement, taille, qte) {
+        this.connect();
+        const query = await bdd.query('UPDATE stocks SET quantite = quantite - $1 WHERE id = $2 AND taille = $3', [qte, id_vetement, taille]);
+    }
+    this.verifClients = async function(nom, mail) {
+        this.connect();
+        const query = await bdd.query('SELECT * FROM clients WHERE nom = $1 AND email = $2', [nom, mail]);
+        return query.rowCount;
+    }
+    this.selectClient = async function(nom, mail) {
+        this.connect();
+        const query = await bdd.query('SELECT id FROM clients WHERE nom = $1 AND email = $2', [nom, mail]);
+        return query.row;
+    }
+    this.insertDefaultClients = async function(nom,prenom,mail,adr) {
+        this.connect();
+        const query = await bdd.query('INSERT INTO clients(nom,prenom,email,adresse,mdp) VALUES ($1,$2,$3,$4,$5)', [nom, prenom, mail,adr ,"defaultmdp"]);
+    }
+    this.passCommand = async function(id_client, id_vetement, date_cmd, taille,qte, num_cmd) {
+        this.connect();
+        const query = await bdd.query('INSERT INTO commandes(client_id, vetement_id, date_livraison, quantite, taille, numero_commande) VALUES ($1,$2,$3,$4,$5,$6)', [id_client,id_vetement,date_cmd,qte,taille,num_cmd]);
     }
 }
 

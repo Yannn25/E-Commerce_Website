@@ -74,11 +74,11 @@
                         </button>
                   </div>
                   <select name="taille" id="taille-select">
-                    <% for (let j = 0; j < tailles.length; j++) { %>
-                      <% if (tailles[j].quantite > 0 && tailles[j].id == contenus[i].id_vetement) { %> 
-                        <option value="<%= tailles[j].taille %>"><%= tailles[j].taille %></option>
-                      <% } %>
-                    <% } %>
+                        <% for (let j = 0; j < tailles.length; j++) { %>
+                            <% if (tailles[j].quantite > 0 && tailles[j].id == contenus[i].id_vetement) { %> 
+                              <option value="<%= tailles[j].taille %>"><%= tailles[j].taille %></option>
+                            <% } %>
+                          <% } %>
                   </select>
                   <input type="hidden" name="id" value="<%= contenus[i].id_vetement %>">
                   <input type="hidden" name="nom" value="<%= contenus[i].nom%>">

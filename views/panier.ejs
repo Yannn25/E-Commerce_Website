@@ -11,7 +11,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="../js/panier.js"></script>
-        <link rel="stylesheet" href="../public/CSS/stylenavbar.css">
+        <link rel="stylesheet" href="../public/CSS/style.css">
     </head>
     <body>
       <nav>
@@ -70,6 +70,7 @@
                     <td>
                         <form action="/updateQuantity" method="POST">
                             <input type="hidden" name="id" value="<%= produit.id %>">
+                            <input type="hidden" name="taille" value="<%= produit.taille %>">
                             <button name="qte" value="-1" class="btn-quantity" >-</button>
                             <span class="quantity"><%= produit.qte %></span>
                             <button name="qte" value="1" class="btn-quantity">+</button>
@@ -77,11 +78,13 @@
                     </td>
                   </tr>
                 <% } %>
-              <% } %>
             </tbody>
           </table>
           <p>Total : <span class="subtotal"><%= prixTotal %></span>€</p>
-          <button id="confirm-command">Passer la commande</button>                            
+          <form action="/Commandes" method="GET">
+            <button type="submit" id="confirm-command">Passer la commande</button>
+          </form>  
+        <% } %>                      
         <%- include('partials/footer.html') %>
     </body>
 </html>
