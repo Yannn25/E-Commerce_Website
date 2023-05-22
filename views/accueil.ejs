@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title> ACCUEIL </title>
+      <!-- Bootstrap -->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      <!-- CSS et JS -->
+      <link rel="stylesheet" href="../CSS/bootstrap.css">
+      <link rel="stylesheet" href="../CSS/accueil.css">
+      <link rel="stylesheet" href="../CSS/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+      <script src="../js/server.js"></script>
+      <script src="../js/accueil.js"></script>
+    </head>
+    <body>
+      <%- include('partials/navbar.html') %>
+
+      <section>
+        <div class="carousel-container">
+            <div class="carousel-slide">
+              <img src="../img/image1.png" class="img-fluid" alt="Responsive image" alt="image1">
+            </div>
+            <div class="carousel-slide">
+              <img src="../img/image2.png" class="img-fluid" alt="Responsive image" alt="image2">
+            </div>
+            <div class="carousel-slide">
+              <img src="../img/image3.png" class="img-fluid" alt="Responsive image" alt="image3">
+            </div>
+    
+            <div class="carousel-slide">
+                <video src="../img/nouvelle_co.mp4" autoplay loop muted ></video>
+              </div>
+            
+         </div>
+    </section>
+
+      <!--affichage des articles-->
+      <section id="accueil">
+        <table id="tableau-vetements" class="table table-image">
+          <thead class="thead-light">
+            <tr class="text-center">
+              <% let i;
+              for (i = 0; i < contenus.length; i++) { 
+                %>
+                <td>
+                  <div class="card">
+                    <img src="<%= contenus[i].image %>" alt="<%= contenus[i].nom %>" style="width:100%">
+                    <h1><%= contenus[i].nom%></h1>
+                    <p class="price"><%= contenus[i].prix %></p>
+                    <p><%= contenus[i].description %></p>
+                    <select id="taille-select">
+                      <% for (let j = 0; j < tailles.length; j++) { %>
+                        <% if (tailles[j].quantite > 0 && tailles[j].id == contenus[i].id_vetement) { %> 
+                          <option value="<%= tailles[j].taille %>"><%= tailles[j].taille %></option>
+                        <% } %>
+                      <% } %>
+                    </select>
+                    <p><button class="panier_button"><i class="bi bi-cart-plus-fill"></i></button></p>
+                  </div>
+                </td>
+              <% } %>
+            </tr>
+          </thead>
+        </table>
+      </section>
+      <img src="../img/img_image1.png" alt="img" style="width:100%">
+
+    <%- include('partials/footer.html') %>
+    </body>
+</html>

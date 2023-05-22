@@ -1,4 +1,6 @@
-console.log("page accueil")
+
+    var ConnectButton = document.getElementById("SwitchtoConnexion");
+    console.log("page accueil")
     //var ConnectButton = document.getElementById("SwitchtoConnexion");
     var HomeButton = document.getElementById("SwitchtoHome");
     var ContactButton = document.getElementById("SwitchtoContact");
@@ -7,6 +9,7 @@ console.log("page accueil")
     var section2 = document.getElementById("connect");
     var section3 = document.getElementById("jsp");
 
+  
     
    /* ConnectButton.addEventListener("click", function() {
         if (section2.style.display === "none") {

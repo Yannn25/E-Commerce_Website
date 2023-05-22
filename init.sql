@@ -5,11 +5,11 @@ CREATE DATABASE IF NOT EXISTS shop;
 CREATE USER roni WITH PASSWORD 'mdp';
 GRANT ALL PRIVILEGES ON DATABASE shop TO roni;
 --Si le message d'erreur "permission denied on table ..." utiliser les lignes suivantes 
--- GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE vetements TO roni;
--- GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE stocks TO roni;
--- GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE clients TO roni;
--- GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE gerants TO roni;
--- GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE commandes TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE vetements TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE stocks TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE clients TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE gerants TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE commandes TO roni;
 
 
 -- Création de la table des vêtements
