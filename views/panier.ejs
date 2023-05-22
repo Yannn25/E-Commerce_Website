@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title> GERANT </title>
+        <title> PANIER </title>
         <!-- Bootstrap -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -17,14 +17,39 @@
         <%- include('partials/navbar.html') %>
         <table class="table">
             <thead>
-                <tr><th>Article</th><th>Prix</th><th>Quantité</th></tr>
+              <tr>
+                <th>Article</th>
+                <th>Prix</th>
+                <th>Taille</th>
+                <th>Quantité</th>
+              </tr>
             </thead>
-            <tbody id="cart-tablebody"></tbody>
-        </table>
-        
-        <p>Total : <span class="subtotal"></span>€</p>
-        
-        <button id="confirm-command">Passer la commande</button>
+            <tbody id="cart-tablebody">
+              <% if (!Array.isArray(panier.panier) || !panier.panier.length || !panier.panier) { %>
+                <tr>
+                  <td colspan="3">Votre panier est vide</td>
+                </tr>
+              <% } else { %>
+                <% for (let produit of panier.panier) { %>
+                  <tr>
+                    <td><%= produit.nom %></td>
+                    <td><%= produit.prix %></td>
+                    <td><%= produit.taille %></td>
+                    <td>
+                        <form action="/updateQuantity" method="POST">
+                            <input type="hidden" name="id" value="<%= produit.id %>">
+                            <button name="qte" value="-1" class="btn-quantity" >-</button>
+                            <span class="quantity"><%= produit.qte %></span>
+                            <button name="qte" value="1" class="btn-quantity">+</button>
+                        </form>
+                    </td>
+                  </tr>
+                <% } %>
+              <% } %>
+            </tbody>
+          </table>
+          <p>Total : <span class="subtotal"><%= prixTotal %></span>€</p>
+          <button id="confirm-command">Passer la commande</button>                            
         <%- include('partials/footer.html') %>
     </body>
 </html>

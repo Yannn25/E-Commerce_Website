@@ -56,7 +56,6 @@
                     <h1><%= contenus[i].nom%></h1>
                     <p class="price"><%= contenus[i].prix %></p>
                     <p><%= contenus[i].description %></p>
-                    
                         <select name="taille" id="taille-select">
                           <% for (let j = 0; j < tailles.length; j++) { %>
                             <% if (tailles[j].quantite > 0 && tailles[j].id == contenus[i].id_vetement) { %> 
@@ -65,7 +64,11 @@
                           <% } %>
                         </select>
                         <p>
-                        <button class="panier_button" data-id="<%= contenus[i].id_vetement %>" data-nom="<%= contenus[i].nom %>" data-prix="<%= contenus[i].prix%>" data-quantite="1" data-taille="">
+                        <input type="hidden" name="id" value="<%= contenus[i].id_vetement %>">
+                        <input type="hidden" name="nom" value="<%= contenus[i].nom%>">
+                        <input type="hidden" name="prix" value="<%= contenus[i].prix %>">
+                        <input type="hidden" name="quantite" value="1">
+                        <button class="panier_button">
                           <i class="bi bi-cart-plus-fill"></i>
                         </button>
                       </form>

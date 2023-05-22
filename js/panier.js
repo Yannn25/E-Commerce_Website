@@ -16,35 +16,47 @@ class Panier {
     }
 
     addProduitPanier(produit) {
-        let foundproduit = this.panier.find(p => p.id == produit.id);
-        if (foundproduit != undefined) {
-            foundproduit.qte++;
-        } else {
-            produit.qte = 1;
-            panier.push(produit);
+        if (!Array.isArray(this.panier)) {
+            this.panier = []; // Si this.panier n'est pas un tableau, initialisez-le comme un tableau vide
         }
-        savePanier();
+        if (this.panier.length === 0) {
+            produit.qte = 1;
+            this.panier.push(produit);
+        } else {
+            let foundproduit = this.panier.find(p => p.id === produit.id);
+            if (foundproduit !== undefined) {
+              foundproduit.qte++;
+            } else {
+              produit.qte = 1;
+              this.panier.push(produit);
+            }
+            this.savePanier();
+        }
     }
+      
 
     removeProduitPanier(produit) {
         this.panier = this.panier.filter(p => p.id != produit.id);
-        savePanier();
+        this.savePanier();
     }
 
-    changeQuantite(produit, quantite) {
-        let foundproduit = this.panier.find(p => p.id == produit.id);
-        if(foundproduit != undefined) {
-            foundproduit.qte += quantite
-            if(foundproduit.qte <= 0) {
-                removeProduitPanier(foundproduit);
+    changeQuantite(idproduit, quantite) {
+        let foundproduit = this.panier.find(p => p.id === idproduit);
+        if (foundproduit !== undefined) {
+            foundproduit.qte += parseInt(quantite);
+            if (foundproduit.qte <= 0) {
+                this.removeProduitPanier(foundproduit);
             } else {
-                savePanier();
+                this.savePanier();
             }
         }
     }
+    
 
     getNbProduitPanier() {
         let nb = 0;
+        if(!this.panier.length) 
+            return nb
         for(let prod of this.panier) {
             nb += prod.qte;
         }
@@ -52,12 +64,17 @@ class Panier {
     }
 
     getPrixTotal() {
-        let tot = 0;
-        for(let prod of this.panier) {
-            tot += prod.qte * prod.prix;
+        let total = 0;
+        if(!this.panier.length) {
+            return total;
+        } else {
+            for (let produit of this.panier) {
+                total += produit.qte * produit.prix;
+            }
+            return total.toFixed(2);
         }
-        return tot;
     }
+
 } module.exports = Panier;
 
 // const subtotal = document.querySelector(".subtotal");

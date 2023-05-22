@@ -1,13 +1,13 @@
 const BDD_shop = require('./BDD_Connexion');
 const Panier = require('./panier.js');
 
-
 async function run() {
   const hostname = 'localhost';
   const port = 9494;
   const express = require("express");
   const server = new express();
   const bodyParser = require('body-parser');
+  const process = require('process');
   server.use(bodyParser.json());
   server.use(express.json());
   server.use(express.urlencoded({extended:true}));
@@ -16,6 +16,8 @@ async function run() {
   server.set('view engine', 'ejs');
   server.use(express.static('js'));
 
+
+  
   await BDD_shop.connect();      
   async function RecupVetements() {
     const vetements = await BDD_shop.recupererVetements();
@@ -76,7 +78,7 @@ async function run() {
     //console.log(exits);
     //console.log(exits == 1);
     //if(exits == 1) {
-       res.redirect('/gerant/stocks');
+      res.redirect('/gerant/stocks');
     //  } else {
     //    res.render('Gerant.ejs', {connect : true});
     // }
@@ -112,8 +114,15 @@ async function run() {
     //307 pour redirect avec post
   });
   
+  process.on('beforeExit', () => {
+    localStorage.clear();
+  });
   server.get('/panier', (req,res) => {
-    res.render('panier.ejs');
+    const panier = new Panier();
+    console.log(panier);
+    const prixTotal = panier.getPrixTotal();
+    console.log(prixTotal);
+    res.render('panier.ejs', {panier, prixTotal});
   });
   server.post('/addPanier', (req, res) => {
     // Récupérer les données du produit à ajouter au panier depuis la requête
@@ -121,16 +130,26 @@ async function run() {
       id: req.body.id,
       nom: req.body.nom,
       prix: req.body.prix,
-      qte : req.body.quantite,
-      taille : req.body.taille,
+      qte: req.body.quantite,
+      taille: req.body.taille,
     };
     console.log(produit);
-    // Créer une instance de la classe Panier
     const panier = new Panier();
     panier.addProduitPanier(produit);
     panier.savePanier();
-    res.send('Produit ajouté au panier avec succès');
+    res.redirect('/panier')
   });
+  server.post('/updateQuantity', (req, res) => {
+    const qte = parseInt(req.body.qte);
+    const productId  = req.body.id;
+    console.log(productId, qte);
+    const panier = new Panier();
+    // Mettre à jour la quantité du produit dans le panier
+    panier.changeQuantite(productId,qte);
+    panier.savePanier();
+    res.redirect('/panier');
+  });
+
   server.get('/favoris', (req,res) => {
     res.render('favoris.ejs');
   });
