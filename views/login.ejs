@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,14 +15,11 @@
         <link rel="stylesheet" href="../CSS/accueil.css">
         <link rel="stylesheet" href="../CSS/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <script src="../js/server.js"></script>
-        <script src="../js/accueil.js"></script>
+        
       </head>
     <body>
-        <%- include('partials/navbar.html') %>
-        
         <form action="/login" method="POST">
-            <section id="connect" style="display:none;">
+            <section id="connect" >
                 <div id="page" class="site">
                     <div class="container">
                         <div class="wrapper">
@@ -110,7 +107,5 @@
                 </div>
             </section>
         </form>
-
-        <%- include('partials/footer.html')%>
     </body>
 </html>

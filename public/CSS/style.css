@@ -1,7 +1,8 @@
 :root{
-    --main-color:#2A2F4F;
-    --dark-color:#11152a;
-    --light-color:#fff;
+    --main-color:#C8B6A6;
+    --dark-color:#8D7B68;
+    --light-color:#F1DEC9;
+
 }
 *{
     margin: 0;
@@ -23,16 +24,8 @@
 .navbar-form {
     margin-left: auto;
 }
-.footer{
-    background-color: #088395;
-}
-.nav-pills{
-    background-color: #0B2447;
-    border-radius: 5px;
-    height: 70px;
-    align-items: center;
-    justify-content: center;
-}
+
+
 #accueil {
 	background-color: #917FB3;
     height: 100vh;
@@ -58,7 +51,7 @@ body{
     font-weight: 400;
     line-height: 1.8;
     color: var(--dark-color);
-    background-color: F6F1E9;
+    background-color: #F6F1E9;
 }
 a{
     text-decoration: none;
@@ -76,62 +69,229 @@ ul{
     list-style: none;
 }
 
-.container{
-        max-width: 1110px;
-        margin: 0 auto;
-}
 
-.wrapper>div{
-    display: flex;
-    flex-direction: column;
+
+/* navbar*/
+nav{
+    position: fixed;
     width: 100%;
-    max-width: 800px;
-    min-height: 500px;
-    margin: 0 auto;
-    background-color: var(--main-color);
-   /* background: linear-gradient(#ff9966,#ff5e62);*/
-    overflow: hidden;
-}
-:is(.login,.signup) > div{
-    position: relative;
-    flex: 1 0 50%;
-    padding: 60px;
-}
-
-.content-heading .y-style{
-    display:flex;
-    flex-direction: column;
-}
-
-.logo a{
-    display: inline-block;
-    margin-bottom: 60px;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--dark-color);
-}
-.logo span{
-    color: #213ef1;
-}
-
-.content-heading p{
-color: var(--light-color);
-}
-.content-form{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    padding: 15px 25px;
+    background-color: #FFFAF4;
+    box-shadow: inset 0px -1px 0px #EBD8B2;
+}
+.user-articles{
+    display: block;
+    cursor: pointer;
+    border: none;
+    transition: all .4s ease-out;
+    color: #E9A178;
+}
+.user-articles:hover{
+    color: #A84448;
 }
 
-.welcome{
-    text-align: center;
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #FFE5CA;
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+  }
+.dropdown:hover .dropdown-content,.dropdown-panier:hover .dropdown-content {display: block;}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }  
+.nav-icon {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-right: 20px;
 }
 
-/**/
-.login{
-    display: none!important;
+.nav-icon span{
+    text-decoration: none;
+    font-size: 25px;
+    margin-left: 10px;
+    font-weight: 400;
+    color: #8D7B68;
 }
 
+.hmg{
+    display: none;
+}
+
+.navlinks-container a{
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #A4907C;
+    display: inline-block;
+    position: relative;
+}
+
+.navlinks-container a::after{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: #8D7B68;
+    transition: transform 0.3s ease-out ;
+}
+.navlinks-container a:hover{
+    color: #8D7B68;
+}
+.navlinks-container a:hover::after{
+    transform: scaleX(1);
+}
+.nav-indentification{
+    margin-left: auto;
+}
+.nav-indentification button{
+    font-size: 16px;
+    min-width: 90px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 5px;
+    margin: 0 5px;
+    transition: all .4s ease-out;
+    background-color: #E9A178;
+    color: #FFFAF4;
+
+}
+.nav-indentification button:hover{
+    background-color: #A84448;
+}
+.user-profile{
+    display: none;
+}
+
+@media (max-width: 900px) {
+    nav{
+        padding: 15px 20px;
+        position: absolute;
+    }
+    .navlinks{
+        order: 1;
+    }
+    .nav-icon{
+        order: 2;
+        margin: 0 auto;
+    }
+    .nav-indentification{
+        order: 3;
+        margin-left: 0;
+    }
+    .nav-icon span{font-size: 22px;} 
+
+    .dropdown-panier:hover .dropdown-content {display: none;}
+    .navlinks-container{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: absolute;
+        padding: 15px 50px 15px 20px;
+        top: 100%;
+        left: 0;
+        height: 100vh;
+        background-color: #F6F1E9;
+        transform: translate(-100%);
+        transition: transform 0.3s ease-out;
+    }
+    .navlinks-container a{
+        font-size: 18px;
+        margin: 10px 0;
+    }
+
+    .regist-btn{
+        display: none;
+
+    }
+
+    .user-profile{
+        display: block;
+        cursor: pointer;
+        border: none;
+        transition: all .4s ease-out;
+        color: #E9A178;
+    }
+    .user-profile:hover{
+        color: #A84448;
+    }
+    .hmg{
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        border: none;
+        display: flex;
+        align-items: center;
+        background: #FFFAF4;
+        position: relative;
+    }
+    .hmg span{
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        position: absolute;
+        pointer-events: none;
+        transition: opacity 0.3s 0.15s ease-out;
+    }
+    .hmg span:nth-child(1),.hmg span:nth-child(3){
+        transition: transform 0.3 ease-out;
+    }
+    .hmg span:nth-child(1){
+        transform: translateY(7px);
+    }
+    .hmg span:nth-child(3){
+        transform: translateY(-7px);
+    }
+
+    .hmg.open span:nth-child(1){
+        transform: translate(0) rotate(135deg);
+    }
+    .hmg.open span:nth-child(2){
+        opacity: 0;
+        transition: opacitity 0s ease-out;
+    }
+    .hmg.open span:nth-child(3){
+        transform: translate(0) rotate(-135deg);
+    }
+    .open{
+        transform: translate(0%);
+    }
+}
+
+/**footer*/
+footer{
+    margin: 0;
+    height: 140px;
+    width: 100%;
+    text-align:center;
+    background-color: #C8C2BC;
+}
+
+footer .liste a{
+    color: #AD8B73;
+    font-weight: 300;
+    font-size: medium;
+}
+
+/*login*/
 form input:not(#terms,#remember){
     font-family: inherit;
     width: 100%;
@@ -148,7 +308,7 @@ form::placeholder{
 }
 
 form button{
-    background-color: #19376D;
+    background-color: var(--main-color);
     color: white;
     width: 100%;
     margin: 30px 0;
@@ -163,7 +323,7 @@ form button{
 }
 
 button:hover{
-    background-color: #0B2447;
+    background-color: var(--dark-color);
 }
 
 .afterform{
@@ -206,16 +366,46 @@ form :is(p,label) a:hover, .afterform a:hover{
     border-radius: 50%;
     transform: translate3d(-27%,21%,0);
     -webkit-transform: translate3d(-27%,21%,0);
+    animation: move 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    -webkit-animation: move 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
+@keyframes move {
+    form{
+        opacity:0;
+        transform : translate3d(50%,60%,0);
+    }
+    to{
+        opacity: 1;
+    }
+}
+
 .y-style{
     position: relative;
+   -webkit-transform:translate3d(0,20%,0);
+    animation: fade-in 0.7s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+    -webkit-animation: fade-in 0.7s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
+
+@keyframes fade-in {
+    form{
+        opacity:0;
+        transform : translate3d(0,20%,0);
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+:is(.login-show,.signup-show) .y-style{
+    transform: translate3d(0,0,0);
+}
+
 .social :is(ul,p){
     display: flex;
     justify-content: center;
     position: relative;
     gap: 20px;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 .social p::before{
     content: '';
@@ -236,13 +426,21 @@ form :is(p,label) a:hover, .afterform a:hover{
 .social a{
     text-decoration: none;
     display: flex;
-    font-size: 20px;
+    font-size: 15px;
     transform: translateY(0);
     transition: transform.3s;
 }
 .social a:hover{
     transform: translateY(-7px);
 }
+
+.login-show .signup, .signup-show .login{
+    display: none;
+}
+.signup-show .signup, login-show, .login{
+    display: flex;
+}
+
 /* Pour les écran à partir de 768px*/
 @media screen and (min-width: 768px) {
     .wrapper>div{
@@ -261,4 +459,15 @@ form :is(p,label) a:hover, .afterform a:hover{
     .welcome{
         text-align: left;
     }
+
+    @keyframes move {
+        form{
+            opacity: 0;
+            transform: translate3d(0,-100%,0);
+        }
+        to{
+            opacity: 1;
+        }
+    }
 }
+

@@ -1,5 +1,6 @@
 function BDD_shop () {
     const pg = require('pg');
+    
     const pool = new pg.Pool({
         user: 'roni',
         host: 'localhost',
@@ -45,7 +46,7 @@ function BDD_shop () {
         this.connect();
         try {
             const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
-            console.log(query.rowCount);
+           // console.log(query.rowCount);
             return query.rowCount;
         } finally {
             bdd.release();

@@ -10,35 +10,35 @@ async function run() {
   server.use(express.json());
   server.use(express.urlencoded({extended:true}));
   server.use(express.static('public'));
-    
-  server.set('view engine', 'html');
-  server.engine('html', require('ejs').renderFile);
+  server.set('view engine', 'ejs');
+  server.use(express.static('js'));
 
+  //server.set('view engine', 'html');
+  //server.engine('html', require('ejs').renderFile);
   await BDD_shop.connect();      
-
   async function RecupVetements() {
     const vetements = await BDD_shop.recupererVetements();
     console.log(vetements);
     return vetements;
   }
-
   server.get('/', async (req,res) => {
     const contenus = await RecupVetements();  
     //console.log(contenus);
     const tailles = await BDD_shop.recupererTaillesDisponibles();
-    res.render('accueil.ejs', { contenus, tailles });
+    res.render('pages/index.ejs', { contenus, tailles });
   });
-  server.get('/product:id'), async (req,res) => {
+  server.get('/product:id', async (req,res) => {
     const id = req.params.id;
-  }
+  });
   server.get('/index', (req,res) => {
     res.render('index2.ejs',);
   });
   server.get('/gerant', (req,res) => {
-    res.render('Gérant.ejs', {connect : false}); 
+    res.render('Gerant.ejs', {connect : false}); 
   });
+
   server.get('/login', (req,res) => {
-    res.render('login.ejs');
+    res.render('login');
   });
   server.post('/loginUser', (req,res) => {
     res.render('login.ejs');
@@ -51,9 +51,9 @@ async function run() {
     //console.log(exits == 1);
     if(exits == 1) {
       const contenus = await RecupVetements();
-      res.render('Gérant.ejs',{connect : true, nom, contenus});
+      res.render('Gerant.ejs',{connect : true, nom, contenus});
     } else {
-      res.render('Gérant.ejs', {connect : false});
+      res.render('Gerant.ejs', {connect : false});
     }
   });
   server.get('/panier', (req,res) => {
@@ -66,5 +66,8 @@ async function run() {
   server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
+
+
 }
 run();
+
