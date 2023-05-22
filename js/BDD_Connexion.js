@@ -13,7 +13,6 @@ function BDD_shop () {
 
     this.connect = async function() {
         bdd = await pool.connect();
-        console.log("Connexion Base de Donnes reussi");
     };
 
     this.recupererVetements = async function() {
@@ -43,7 +42,7 @@ function BDD_shop () {
     // }
 
     this.GerantLog = async function(nom, mdp) {
-        this.connect();
+       this.connect();
         try {
             const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
             return query.rowCount;
@@ -77,6 +76,15 @@ function BDD_shop () {
         } finally {
            // bdd.release();
         }
+    }
+    this.Login = async function(mail, pswd) {
+        this.connect();
+        const query = await bdd.query('SELECT * FROM clients WHERE email = $1 AND mdp= $2', [mail, pswd]);
+        return query.rowCount;
+    }
+    this.SignUp = async function(nom, prenom, mail, pswd) {
+        this.connect();
+        const query = await bdd.query('INSERT INTO clients(nom,prenom,email,mdp) VALUES ($1,$2,$3,$4)', [nom,prenom, mail, pswd]);
     }
 }
 

@@ -1,16 +1,7 @@
---Connect to the PostgreSQL server using the psql command with a, 
---superuser account or an account that has the CREATEROLE privilege:
---psql -U postgres
-CREATE DATABASE IF NOT EXISTS shop;
+CREATE DATABASE shop;
 CREATE USER roni WITH PASSWORD 'mdp';
 GRANT ALL PRIVILEGES ON DATABASE shop TO roni;
---Si le message d'erreur "permission denied on table ..." utiliser les lignes suivantes 
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE vetements TO roni;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE stocks TO roni;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE clients TO roni;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE gerants TO roni;
-GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE commandes TO roni;
-
+\c shop;
 
 -- Création de la table des vêtements
 CREATE TABLE IF NOT EXISTS vetements (
@@ -33,13 +24,13 @@ CREATE TABLE IF NOT EXISTS stocks (
 CREATE TABLE IF NOT EXISTS clients (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
-    prenom VARCHAR(255) NOT NULL,
-    email VARCHAR(255) ,
-    adresse VARCHAR(255) NOT NULL,
-    ville VARCHAR(255) NOT NULL,
-    code_postal VARCHAR(10) NOT NULL,
+    prenom VARCHAR(255) ,
+    email VARCHAR(255),
+    adresse VARCHAR(255),
+    ville VARCHAR(255),
+    code_postal VARCHAR(10),
     pays VARCHAR(255),
-    mot_de_passe VARCHAR(255)
+    mdp VARCHAR(255) NOT NULL
 );
 
 -- Création de la table des gérants
@@ -59,6 +50,21 @@ CREATE TABLE IF NOT EXISTS commandes (
     date_commande DATE,
     quantite INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS favori (
+    vetement_id INTEGER,
+    client_id INTEGER,
+    PRIMARY KEY (vetement_id, client_id),
+    FOREIGN KEY (vetement_id) REFERENCES vetements (id_vetement),
+    FOREIGN KEY (client_id) REFERENCES clients (id)
+);
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE vetements TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE stocks TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE clients TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE gerants TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE commandes TO roni;
+GRANT USAGE, SELECT ON SEQUENCE clients_id_seq TO roni;
 
 -- Insertion de données initiales dans la table des vêtements
 INSERT INTO vetements (nom, description, prix, image) VALUES 
@@ -115,10 +121,11 @@ INSERT INTO stocks(id,taille,quantite) VALUES
     (11,'XXL',2);
 
 -- Insertion de données initiales dans la table des clients
-INSERT INTO clients (nom, prenom, email, adresse, ville, code_postal, pays) VALUES
-    ('Dupont', 'Jean', 'jean.dupont@example.com', '123 Rue des Fleurs', 'Paris', '75001', 'France'),
-    ('Martin', 'Sophie', 'sophie.martin@example.com', '456 Avenue des Étoiles', 'Lyon', '69002', 'France'),
-    ('Leclerc', 'Pierre', 'pierre.leclerc@example.com', '7119 Rue du Soleil', 'Marseille', '130011', 'France');
+INSERT INTO clients (nom, prenom, email, adresse, ville, code_postal, pays, mdp) VALUES
+    ('Dupont', 'Jean', 'jean.dupont@example.com', '123 Rue des Fleurs', 'Paris', '75001', 'France', 'password1'),
+    ('Martin', 'Sophie', 'sophie.martin@example.com', '456 Avenue des Étoiles', 'Lyon', '69002', 'France', 'password2'),
+    ('Leclerc', 'Pierre', 'pierre.leclerc@example.com', '7119 Rue du Soleil', 'Marseille', '130011', 'France', 'password3');
+
 
 INSERT INTO gerants(nom,prenom,email,mot_de_passe) VALUES
     ('roni','gerant','roni@mail.com','test');
