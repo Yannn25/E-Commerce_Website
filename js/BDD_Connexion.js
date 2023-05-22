@@ -22,7 +22,7 @@ function BDD_shop () {
             const query = await bdd.query('SELECT * FROM vetements');
             return query.rows;
         } finally {
-            bdd.release();
+          //  bdd.release();
         }
     };
     this.recupererTaillesDisponibles = async function() {
@@ -31,7 +31,7 @@ function BDD_shop () {
             const query = await bdd.query('SELECT * FROM stocks');
             return query.rows;
         } finally {
-            bdd.release();
+           // bdd.release();
         }
     };
 
@@ -48,7 +48,7 @@ function BDD_shop () {
             const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
             return query.rowCount;
         } finally {
-            bdd.release();
+            //bdd.release();
         }
     }
     this.AjoutStock = async function(id_vetement, quantite, taille) {
@@ -57,7 +57,7 @@ function BDD_shop () {
             const query = await bdd.query('INSERT INTO stocks(id,taille,quantite) VALUES($1, $2, $3)', [id_vetement, taille, quantite]);
           //return query;
         } finally {
-          bdd.release();
+          //bdd.release();
         }
     }
       
@@ -67,7 +67,6 @@ function BDD_shop () {
             const query = await bdd.query('SELECT * FROM commandes');
             return query.rows;
         } finally {
-            bdd.release();
         }
     }
     this.SuppCommand = async function(id_command) {
@@ -76,7 +75,7 @@ function BDD_shop () {
             const query = await bdd.query('DELETE FROM commandes WHERE id = $1', [id_command]);
             //console.log(query.rowCount);
         } finally {
-            bdd.release();
+           // bdd.release();
         }
     }
 }
