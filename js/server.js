@@ -25,7 +25,7 @@ async function run() {
     const contenus = await RecupVetements();  
     //console.log(contenus);
     const tailles = await BDD_shop.recupererTaillesDisponibles();
-    res.render('accueil.ejs', { contenus, tailles });
+    res.render('pages/index.ejs', { contenus, tailles });
   });
   server.get('/product:id', async (req,res) => {
     const id = req.params.id;

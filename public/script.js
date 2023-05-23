@@ -1,32 +1,28 @@
-/* Changement entre es sections */
-var ConnectButton = document.getElementById("SwitchtoConnexion");
-var HomeButton = document.getElementById("SwitchtoHome");
-var ContactButton = document.getElementById("SwitchtoContact");
+/**
+ * transition 3 barres croix pour la navbar
+ */
+const tg = document.querySelector(".hmg")
+const navlinksContainer = document.querySelector(".navlinks-container")
+const tgNav = e =>{
+	tg.classList.toggle("open")
+	navlinksContainer.classList.toggle("open")
+	const ariaTg = tg.getAttribute("aria-expanded") === "true"?"false" : "true"
+	tg.setAttribute("aria-expanded",ariaTg)
+}
+tg.addEventListener("click",tgNav)
 
-var section1 = document.getElementById("accueil");
-var section2 = document.getElementById("connect");
-var section3 = document.getElementById("articles");
-ConnectButton.addEventListener("click", function() {
-  if (section2.style.display === "none") {
-    section2.style.display = "block";
-    section1.style.display = "none";
-    section3.style.display = "none";
-  }
-});
-HomeButton.addEventListener("click", function() {
-  if (section1.style.display === "none") {
-    section1.style.display = "flex";
-    section3.style.display = "flex";
-    section2.style.display = "none";
-  }
-});
-ContactButton.addEventListener("click", function() {
-  if (section1.style.display === "none") {
-    section1.style.display = "flex";
-    section3.style.display = "flex";
-    section2.style.display = "none";
-  }
-});
+/**
+ * pour que ce soit plus propre quand on resize
+ */
+
+new ResizeObserver(entries => {
+	if (entries[0].contentRect.width <= 900) {
+		navlinksContainer.style.transition = "transform 0.3s ease-out"
+	}else{
+		navlinksContainer.style.transition = "none"
+	}
+	
+}).observe(document.body)
 /* Images qui tournent accueil */
 
 const carousel = document.querySelector('.carousel-container');

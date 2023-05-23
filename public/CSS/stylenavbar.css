@@ -12,6 +12,7 @@ nav{
     padding: 15px 25px;
     background-color: #FFFAF4;
     box-shadow: inset 0px -1px 0px #EBD8B2;
+    z-index: 9999;
 }
 .user-articles{
     display: block;

@@ -12,89 +12,149 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <!-- CSS et JS -->
         <script src="../js/server.js"></script>
-        <script src="../js/script.js"></script>
+        <link rel="stylesheet" href="../CSS/style.css">
     </head>
     <body>
-      <%- include('partials/navbar.html') %>
       
-        <% if (stocks) { %>
-          <form action="/gerant/commandes" method="GET">
-            <p>
-              <button id="switch" value="commandes"> Commandes </button>
-            </p>
-          </form>
-          <% for (let i = 0; i < contenus.length; i++) { %>
-            <td>
-              <div class="card">
-                <img src="<%= contenus[i].image %>" alt="<%= contenus[i].nom %>" style="width:10%">
-                <h1><%= contenus[i].nom %></h1>
-                <p class="price"><%= contenus[i].prix %></p>
-                <p><%= contenus[i].description %></p>
-                <form action="/gerant/AddStocks" method="POST">
-                  <select name="taille" id="taille-select"> <!-- essayer d'ajouter les stocks déjà présents pour chaque taille -->
-                    <option value="XS">XS</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                    <option value="XXL">XXL</option>
-                  </select>              
-                  <p>
-                    <input type="hidden" name="idVetement" value="<%= contenus[i].id_vetement %>">
-                    <input type="text" name="quantite" placeholder="quantité" required pattern="[0-9]+" title="Veuillez entrer un nombre entier" autocomplete="off">
-                    <button type="submit" class="add_taille" style="background-color: cornflowerblue;">
-                      <i class="bi bi-plus-square"></i>
-                    </button>
-                  </p>
-                </form>
-              </div>
-            </td>
-          <% } %>
-        <% } else { %>
-          <form action="/gerant/stocks" method="GET"> <p> <button id="switch" value="stocks"> Stocks </button> </p> </form>
-          <% for (let i = 0; i < commandes.length; i++) { %>
-            <td>
-              <div class="card">
+      <nav>
+        <a href="#" class="nav-icon" aria-label="visithomepage" aria-current="page"><i class="fas fa-leaf" style="color: #8D7B68;"></i> <span> FRIP</span></a>
+        <div class="navlinks">
+             <button class="hmg" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                 <span></span>
+                 <span></span>
+                 <span></span>
+             </button>
+ 
+             <div class="navlinks-container">
+                 <a href="/" aria-current="page" id="SwitchtoHome">HOME</a>
+                 <a href="/login" aria-current="page">PROFIL</a>
+                 
+                 <div class="dropdown">
+                     <a href="#" class="dropbtn" aria-current="page">HOMME ▼</a>
+                     <div class="dropdown-content">
+                       <a href="#">Hauts</a>
+                       <a href="#">Bas</a>
+                       <a href="#">Combinaisons</a>
+                     </div>
+                   </div>
+ 
+                   <div class="dropdown">
+                     <a href="#" class="dropbtn" aria-current="page">FEMMES ▼</a>
+                     <div class="dropdown-content">
+                         <a href="#">Hauts</a>
+                         <a href="#">Bas</a>
+                         <a href="#">Combinaisons</a>
+                     </div>
+                   </div>
+             </div>
+        </div>
+ 
+        
+        <div class="nav-indentification">
+             <a href="/login" class="user-profile"aria-label="sign in page"><i class="fas fa-user fa-2x" id="user-icon" ></i></a>
+        </div>
+        
+          <form action="/gerant/commandes" method="GET"><button id="switch" value="commandes"> Commandes </button></form>
+          <span>&nbsp;</span>
+        <form action="/gerant/stocks" method="GET">  <button id="switch" value="stocks"> Stocks </button>  </form>
+      
+     </nav>
+
+     <section>
+      <% if (stocks) { %>
+        <% for (let i = 0; i < contenus.length; i++) { %>
+          <td>
+            <div class="card">
+              <img src="<%= contenus[i].image %>" alt="<%= contenus[i].nom %>" style="width:10%">
+              <h1><%= contenus[i].nom %></h1>
+              <p class="price"><%= contenus[i].prix %></p>
+              <p><%= contenus[i].description %></p>
+              <form action="/gerant/AddStocks" method="POST">
+                <select name="taille" id="taille-select"> <!-- essayer d'ajouter les stocks déjà présents pour chaque taille -->
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>              
                 <p>
-                  <tr>
-                    <td>ID :</td>
-                    <td><%= commandes[i].id %></td>
-                  </tr>
+                  <input type="hidden" name="idVetement" value="<%= contenus[i].id_vetement %>">
+                  <input type="text" name="quantite" placeholder="quantité" required pattern="[0-9]+" title="Veuillez entrer un nombre entier" autocomplete="off">
+                  <button type="submit" class="add_taille" style="background-color: cornflowerblue;">
+                    <i class="bi bi-plus-square"></i>
+                  </button>
                 </p>
-                <p>
-                  <tr>
-                    <td>Client ID :</td>
-                    <td><%= commandes[i].client_id %></td>
-                  </tr>
-                </p>
-                <p>
-                  <tr>
-                    <td>Vetement ID :</td>
-                    <td><%= commandes[i].vetement_id %></td>
-                  </tr>
-                </p>
-                <p>
-                  <tr>
-                    <td>Date de la commande :</td>
-                    <td><%= commandes[i].date_commande %></td>
-                  </tr>
-                </p>
-                <p>
-                  <form action="/gerant/supprimer-commande" method="POST">
-                    <input type="hidden" name="commandeId" value="<%= commandes[i].id %>" onsubmit="return confirmDelete();" >
-                    <button type="submit" style="background-color: red; color:white;">Supprimer</button>
-                    <!--Essayer d'implémenter une sorte d'alerte qui demander aux gérants une confirmation-->
-                    <script>
-                      function confirmDelete() {
-                        return window.confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');
-                      }
-                    </script>
-                  </form>
-                </p>
-              </div>
-            </td>
-          <% } %>
+              </form>
+            </div>
+          </td>
         <% } %>
-      <%- include('partials/footer.html') %>
+      <% } else { %>
+        <% for (let i = 0; i < commandes.length; i++) { %>
+          <td>
+            <div class="card">
+              <p>
+                <tr>
+                  <td>ID :</td>
+                  <td><%= commandes[i].id %></td>
+                </tr>
+              </p>
+              <p>
+                <tr>
+                  <td>Client ID :</td>
+                  <td><%= commandes[i].client_id %></td>
+                </tr>
+              </p>
+              <p>
+                <tr>
+                  <td>Vetement ID :</td>
+                  <td><%= commandes[i].vetement_id %></td>
+                </tr>
+              </p>
+              <p>
+                <tr>
+                  <td>Date de la commande :</td>
+                  <td><%= commandes[i].date_commande %></td>
+                </tr>
+              </p>
+              <p>
+                <form action="/gerant/supprimer-commande" method="POST">
+                  <input type="hidden" name="commandeId" value="<%= commandes[i].id %>" onsubmit="return confirmDelete();" >
+                  <button type="submit" style="background-color: red; color:white;">Supprimer</button>
+                  <!--Essayer d'implémenter une sorte d'alerte qui demander aux gérants une confirmation-->
+                  <script>
+                    function confirmDelete() {
+                      return window.confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');
+                    }
+                  </script>
+                </form>
+              </p>
+            </div>
+          </td>
+        <% } %>
+      <% } %>
+     </section>
+     
+        
+        <footer class="text-center">
+          <a class="up-arrow" href="#" data-toggle="tooltip" title="TO TOP">
+              <i class="bi bi-chevron-up"></i>
+          </a><br>
+          <div class="social">
+              <ul>
+                  <li> <a href="#"> <i class="fab fa-instagram" style="color: #ac2bac;"></i></a></li> 
+                  <li><a href="#" class="google"><i class="fab fa-google" style="color: #dd4b39;"></i></a></li>
+                  <li><a href="#" class="facebook"><i class="fab fa-facebook-f" style="color: #3b5998;" ></i></a></li>
+                  <li><a href="#" class="twitter"><i class="fab fa-twitter" style="color: #55acee;" ></i></a></li>
+              </ul>
+              
+              <ul class="liste">
+                  <li><a href="#">home</a></li>
+                  <li><a href="#">about</a></li>
+                  <li><a href="#">services</a></li>
+              </ul>
+          </div>
+          <p>Website made By Emmou Coffi Marie-Tiffany & Edikeu Yann  &copy; 2023 </p>  
+      </footer> 
     </body>
 </html>
