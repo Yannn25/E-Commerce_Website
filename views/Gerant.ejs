@@ -60,80 +60,82 @@
       
      </nav>
 
-
-     
-        <% if (stocks) { %>
-          <% for (let i = 0; i < contenus.length; i++) { %>
-            <td>
-              <div class="card">
-                <img src="<%= contenus[i].image %>" alt="<%= contenus[i].nom %>" style="width:10%">
-                <h1><%= contenus[i].nom %></h1>
-                <p class="price"><%= contenus[i].prix %></p>
-                <p><%= contenus[i].description %></p>
-                <form action="/gerant/AddStocks" method="POST">
-                  <select name="taille" id="taille-select"> <!-- essayer d'ajouter les stocks déjà présents pour chaque taille -->
-                    <option value="XS">XS</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                    <option value="XXL">XXL</option>
-                  </select>              
-                  <p>
-                    <input type="hidden" name="idVetement" value="<%= contenus[i].id_vetement %>">
-                    <input type="text" name="quantite" placeholder="quantité" required pattern="[0-9]+" title="Veuillez entrer un nombre entier" autocomplete="off">
-                    <button type="submit" class="add_taille" style="background-color: cornflowerblue;">
-                      <i class="bi bi-plus-square"></i>
-                    </button>
-                  </p>
-                </form>
-              </div>
-            </td>
-          <% } %>
-        <% } else { %>
-          <% for (let i = 0; i < commandes.length; i++) { %>
-            <td>
-              <div class="card">
+     <section>
+      <% if (stocks) { %>
+        <% for (let i = 0; i < contenus.length; i++) { %>
+          <td>
+            <div class="card">
+              <img src="<%= contenus[i].image %>" alt="<%= contenus[i].nom %>" style="width:10%">
+              <h1><%= contenus[i].nom %></h1>
+              <p class="price"><%= contenus[i].prix %></p>
+              <p><%= contenus[i].description %></p>
+              <form action="/gerant/AddStocks" method="POST">
+                <select name="taille" id="taille-select"> <!-- essayer d'ajouter les stocks déjà présents pour chaque taille -->
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>              
                 <p>
-                  <tr>
-                    <td>ID :</td>
-                    <td><%= commandes[i].id %></td>
-                  </tr>
+                  <input type="hidden" name="idVetement" value="<%= contenus[i].id_vetement %>">
+                  <input type="text" name="quantite" placeholder="quantité" required pattern="[0-9]+" title="Veuillez entrer un nombre entier" autocomplete="off">
+                  <button type="submit" class="add_taille" style="background-color: cornflowerblue;">
+                    <i class="bi bi-plus-square"></i>
+                  </button>
                 </p>
-                <p>
-                  <tr>
-                    <td>Client ID :</td>
-                    <td><%= commandes[i].client_id %></td>
-                  </tr>
-                </p>
-                <p>
-                  <tr>
-                    <td>Vetement ID :</td>
-                    <td><%= commandes[i].vetement_id %></td>
-                  </tr>
-                </p>
-                <p>
-                  <tr>
-                    <td>Date de la commande :</td>
-                    <td><%= commandes[i].date_commande %></td>
-                  </tr>
-                </p>
-                <p>
-                  <form action="/gerant/supprimer-commande" method="POST">
-                    <input type="hidden" name="commandeId" value="<%= commandes[i].id %>" onsubmit="return confirmDelete();" >
-                    <button type="submit" style="background-color: red; color:white;">Supprimer</button>
-                    <!--Essayer d'implémenter une sorte d'alerte qui demander aux gérants une confirmation-->
-                    <script>
-                      function confirmDelete() {
-                        return window.confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');
-                      }
-                    </script>
-                  </form>
-                </p>
-              </div>
-            </td>
-          <% } %>
+              </form>
+            </div>
+          </td>
         <% } %>
+      <% } else { %>
+        <% for (let i = 0; i < commandes.length; i++) { %>
+          <td>
+            <div class="card">
+              <p>
+                <tr>
+                  <td>ID :</td>
+                  <td><%= commandes[i].id %></td>
+                </tr>
+              </p>
+              <p>
+                <tr>
+                  <td>Client ID :</td>
+                  <td><%= commandes[i].client_id %></td>
+                </tr>
+              </p>
+              <p>
+                <tr>
+                  <td>Vetement ID :</td>
+                  <td><%= commandes[i].vetement_id %></td>
+                </tr>
+              </p>
+              <p>
+                <tr>
+                  <td>Date de la commande :</td>
+                  <td><%= commandes[i].date_commande %></td>
+                </tr>
+              </p>
+              <p>
+                <form action="/gerant/supprimer-commande" method="POST">
+                  <input type="hidden" name="commandeId" value="<%= commandes[i].id %>" onsubmit="return confirmDelete();" >
+                  <button type="submit" style="background-color: red; color:white;">Supprimer</button>
+                  <!--Essayer d'implémenter une sorte d'alerte qui demander aux gérants une confirmation-->
+                  <script>
+                    function confirmDelete() {
+                      return window.confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');
+                    }
+                  </script>
+                </form>
+              </p>
+            </div>
+          </td>
+        <% } %>
+      <% } %>
+     </section>
+     
+        
         <footer class="text-center">
           <a class="up-arrow" href="#" data-toggle="tooltip" title="TO TOP">
               <i class="bi bi-chevron-up"></i>
