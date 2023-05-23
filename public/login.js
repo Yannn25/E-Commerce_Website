@@ -34,3 +34,4 @@ logIn.addEventListener('click',function () {
   addclass.className = 'site login-show'
 })
 
+/* si on clique sur envoyer mais qu'il y une erreur/champ manquant on envoie le warning */
