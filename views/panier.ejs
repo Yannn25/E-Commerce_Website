@@ -10,6 +10,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../../CSS/style.css">
         
     </head>
     <body>
@@ -67,8 +68,55 @@
             </div>
          </nav>
 
-        <h1>Votre panier</h1>
- 
+       
+         
+        
+        
+        
+        <section>
+            <button id="confirm-command">Passer la commande</button>
+        
+        <p>Sous total : <span class="subtotal"></span>€</p>
+            <div class="col-lg-8">
+                <h1>Votre panier</h1>
+                <div class="ps-lg-1-6 ps-xl-5">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <!-- début produit-->
+                            
+                           <div class="produit">
+                                <div class="img-produit">
+                                    <a href="#"> 
+                                        <img class="imgp" src="../img/products_img/product-4.jpg" alt="4jpg" style="width:100%">
+                                    </a>
+                                </div>
+                                <div class="ecrit-produit">
+                                    <h3 class="nom produit">poo bleu</h3>
+                                    <p class="desc-produit">petit polo chic </p>
+                                </div>
+                                <div class="prix-produit">10€</div>
+            
+                                <div class="icones-produit">
+                                    <a href="#">
+                                        <i class="far fa-heart"></i>
+                                        <span class="product-tooltip">wishlist</span>
+                                    </a>
+                                    <a href="#">
+                                        <i class="bi bi-eye"></i>
+                                        <span class="product-tooltip">voir</span>
+                                    </a>
+                                   
+                                </div>
+                                
+                                <button type="button" class="btn btn-warning">Supprimer</button>
+                            </div>
+                            
+                            <!-- fin produit-->
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <footer class="text-center">
             <a class="up-arrow" href="#" data-toggle="tooltip" title="TO TOP">
