@@ -20,7 +20,8 @@ async function run() {
   server.use(session({
     secret: 'anonymeKey', 
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    clientId: 0
   }));
   
   
@@ -29,10 +30,24 @@ async function run() {
     const vetements = await BDD_shop.recupererVetements();
     return vetements;
   }
+  function groupByNumeroCommande(commandes) {
+    const commandesGroupes = {};
+    
+    for (const commande of commandes) {
+      const numeroCommande = commande.numero_commande;
+      if (!commandesGroupes[numeroCommande]) {
+        commandesGroupes[numeroCommande] = [];
+      }
+      commandesGroupes[numeroCommande].push(commande);
+    }
+    return commandesGroupes;
+  }
+
   server.get('/', async (req,res) => {
     const contenus = await RecupVetements();  
     const tailles = await BDD_shop.recupererTaillesDisponibles();
-    res.render('accueil.ejs', { contenus, tailles });
+    const clientId = req.session.clientId;
+    return res.render('accueil.ejs', { contenus, tailles, clientId });
   });
 
   server.get('/product:id', async (req,res) => {
@@ -41,14 +56,13 @@ async function run() {
 
   //LOGIN ET SIGNUP
   server.get('/login', (req, res) => {
-    res.render('login.ejs', { error: '' });
+    return res.render('login.ejs', { error: '' });
   });
   
   server.post('/login', async (req, res) => {
-    if (req.session.clientID != undefined) {
+    if (req.session.clientId != undefined) {
       return res.redirect('/favoris');
     }
-  
     const email = req.body.email;
     const password = req.body.password;
   
@@ -59,10 +73,10 @@ async function run() {
   
     if (exits == 1) {
       const clientId = await BDD_shop.idLogin(email, password);
-      console.log(clientId);
+      console.log('idlogin avant req : '+clientId);
       req.session.clientId = clientId;
-      console.log(req.session.clientId);
-      return res.render('favoris.ejs', { clientId: clientId });
+      console.log('login : '+req.session.clientId);
+      return res.redirect('/favoris');
     } else {
       return res.render('login.ejs', { error: 'Inscrivez vous dès maintenant' });
     }
@@ -85,21 +99,49 @@ async function run() {
     const prenom = nameParts.slice(1).join(' ');
   
     await BDD_shop.SignUp(nom, prenom, email, password);
-    const clientId = BDD_shop.selectClient(nom, email);
+    const clientId = await BDD_shop.selectClient(nom, email);
     req.session.clientId = clientId;
     console.log(req.session.clientId);
     return res.redirect('/favoris');
   });
   
   // FAVORIS
-  server.get('/favoris', (req, res) => {
-    console.log(req.session.clientId);
+  server.get('/favoris', async (req, res) => {
     if (!req.session.clientId) {
       return res.redirect('/login');
     }
     const clientId = req.session.clientId;
-    // const favoris = BDD_shop.allFavoris(clientID); 
-    return res.render('favoris.ejs', { clientId: clientId });
+    const favoris = await BDD_shop.allFavoris(clientId);
+    const infoClient = await BDD_shop.infoClient(clientId);
+    console.log(infoClient);
+    const { nom, prenom, email } = infoClient;
+    console.log(nom, prenom,email);
+    const info = {nom, prenom, email};
+    const commandes = await BDD_shop.commandesClient(clientId);
+    const commandesGroupes = groupByNumeroCommande(commandes);
+    const tailles = await BDD_shop.recupererTaillesDisponibles();
+    const vetements = await BDD_shop.RecupVetementsFav(clientId);
+    return res.render('favoris.ejs', { favoris : favoris, infoClient : infoClient, vetements : vetements, tailles : tailles, commandesGroupes : commandesGroupes});
+  });
+  server.post('/addFav', async  (req, res) => {
+    console.log(req.session.clientId);
+    if (!req.session.clientId) {
+      return res.redirect('/login');
+    }
+    const id_client = req.session.clientId;
+    const id_vetement = req.body.id_vetement;
+    await BDD_shop.addFav(id_vetement, id_client);
+    return res.redirect('/favoris');
+  });
+  server.post('/supFav', async  (req, res) => {
+    console.log(req.session.clientId);
+    if (!req.session.clientId) {
+      return res.redirect('/login');
+    }
+    const id_client = req.session.clientId;
+    const id_vetement = req.body.id_vetement;
+    await BDD_shop.supFav(id_vetement, id_client);
+    return res.redirect('/favoris');
   });
   
 
@@ -109,11 +151,11 @@ async function run() {
       res.redirect('/gerantLog');
     } else {
       const contenus = await RecupVetements();
-      res.render('Gerant.ejs', { stocks: true, contenus });
+      return res.render('Gerant.ejs', { stocks: true, contenus });
     }
   });
   server.get('/gerantLog', async (req, res) => {
-    res.render('GerantLogin.ejs');
+    return res.render('GerantLogin.ejs');
   });
   server.post('/gerant', async (req, res) => {
     let { nom, mdp } = req.body;
@@ -123,17 +165,17 @@ async function run() {
     console.log(exits == 1);
     if (exits == 1) {
       req.session.gerantId = BDD_shop.gerantID(nom);
-      res.redirect('/gerant/stocks');
+      return res.redirect('/gerant/stocks');
     } else {
-      res.redirect('/gerantLog');
+      return res.redirect('/gerantLog');
     }
   });
   server.get('/gerant/stocks', async (req, res) => {
     if (!req.session.gerantId) {
-      res.redirect('/gerantLog');
+      return res.redirect('/gerantLog');
     } else {
       const contenus = await RecupVetements();
-      res.render('Gerant.ejs', { connect: true, stocks: true, contenus });
+      return res.render('Gerant.ejs', { connect: true, stocks: true, contenus });
     }
   });
   server.post('/gerant/AddStocks', async (req, res) => {
@@ -142,24 +184,24 @@ async function run() {
     const taille = req.body.taille;
     try {
       await BDD_shop.AjoutStock(idVetement, quantite, taille);
-      res.redirect('/gerant/stocks');
+      return res.redirect('/gerant/stocks');
     } catch (error) {
       console.error('Une erreur s\'est produite lors de l\'ajout de stock :', error);
-      res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
+      return res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
     }
   });
   server.get('/gerant/commandes', async (req, res) => {
     if (!req.session.gerantId) {
-      res.redirect('/gerantLog');
+      return res.redirect('/gerantLog');
     } else {
       const commandes = await BDD_shop.AllCommands();
-      res.render('Gerant.ejs', { connect: true, stocks: false, commandes });
+      return res.render('Gerant.ejs', { connect: true, stocks: false, commandes });
     }
   });
   server.post('/gerant/supprimer-commande', async (req, res) => {
     const commandeId = req.body.commandeId;
     await BDD_shop.SuppCommand(commandeId);
-    res.redirect('/gerant/commandes');
+    return res.redirect('/gerant/commandes');
     //307 pour redirect avec post
   });
   
@@ -172,7 +214,7 @@ async function run() {
     console.log(panier);
     const prixTotal = panier.getPrixTotal();
     console.log(prixTotal);
-    res.render('panier.ejs', {panier, prixTotal});
+    return res.render('panier.ejs', {panier, prixTotal});
   });
   server.post('/addPanier', (req, res) => {
     // Récupérer les données du produit à ajouter au panier depuis la requête
@@ -187,7 +229,7 @@ async function run() {
     const panier = new Panier();
     panier.addProduitPanier(produit);
     panier.savePanier();
-    res.redirect('/panier')
+    return res.redirect('/panier')
   });
   server.post('/updateQuantity', (req, res) => {
     const qte = parseInt(req.body.qte);
@@ -202,13 +244,13 @@ async function run() {
     // Mettre à jour la quantité du produit dans le panier
     panier.changeQuantite(product, qte);
     panier.savePanier();
-    res.redirect('/panier');
+    return res.redirect('/panier');
   });
 
   //COMMANDES
   server.get('/Commandes', (req,res) => {
     const panier = new Panier();
-    res.render('Commandes.ejs', panier);
+    return res.render('Commandes.ejs', panier);
   });
   server.post('/sendCommandes', async (req,res) => {
     const { nom, prenom, adresse, email, heure_livraison} = req.body;
@@ -239,7 +281,7 @@ async function run() {
       await BDD_shop.updateStock(id_vetement, taille, quantite);
     }
     panier.clearPanier();
-    res.render('confirmation.ejs', {check : "Votre commande est bien passer"});
+    return res.render('confirmation.ejs', {check : "Votre commande est bien passer"});
   });
   
  

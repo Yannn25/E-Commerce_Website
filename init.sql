@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS commandes (
     numero_commande VARCHAR(128)
 );
 
-CREATE TABLE IF NOT EXISTS favori (
+CREATE TABLE IF NOT EXISTS favoris (
     vetement_id INTEGER,
     client_id INTEGER,
     PRIMARY KEY (vetement_id, client_id),
@@ -66,8 +66,11 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE stocks TO roni;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE clients TO roni;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE gerants TO roni;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE commandes TO roni;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE favoris TO roni;
 GRANT USAGE, SELECT ON SEQUENCE clients_id_seq TO roni;
+GRANT USAGE, SELECT ON SEQUENCE gerants_id_seq TO roni;
 GRANT USAGE, SELECT ON SEQUENCE commandes_id_seq TO roni;
+
 -- Insertion de données initiales dans la table des vêtements
 INSERT INTO vetements (nom, description, prix, image) VALUES 
     ('Chemise', 'Chemise en coton avec motif à carreaux', 29.99,'../img/products_img/product-4.jpg'),
@@ -130,11 +133,12 @@ INSERT INTO clients (nom, prenom, email, adresse, ville, code_postal, pays, mdp)
 
 
 INSERT INTO gerants(nom,prenom,email,mot_de_passe) VALUES
-    ('roni','gerant','roni@mail.com','test');
+    ('roni','gerant','roni@mail.com','test'),
+    ('test','gerant','test@mail.com','mdp');
     
 -- Insertion de données initiales dans la table des commandes
-INSERT INTO commandes (client_id, vetement_id, date_commande, quantite) VALUES
-    (1, 1, '2023-04-10', 2),
-    (2, 3, '2023-04-11', 1),
-    (3, 2, '2023-04-12', 3);
+INSERT INTO commandes (client_id, vetement_id, date_livraison, quantite, taille, numero_commande) VALUES
+    (1, 1, '2023-04-10 12h00', 2,'L', '123455'),
+    (2, 3, '2023-04-11 10h00', 1, 'S','42761'),
+    (3, 2, '2023-04-12 18h30', 3, 'XL','62189');
 

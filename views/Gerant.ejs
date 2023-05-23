@@ -90,38 +90,44 @@
           </td>
         <% } %>
       <% } else { %>
+        <% let commandesGroupes = {}; %>
         <% for (let i = 0; i < commandes.length; i++) { %>
+          <% const numeroCommande = commandes[i].numero_commande; %>
+          <% if (!commandesGroupes[numeroCommande]) { %>
+            <% commandesGroupes[numeroCommande] = []; %>
+          <% } %>
+          <% commandesGroupes[numeroCommande].push(commandes[i]); %>
+        <% } %>
+        <% for (const numeroCommande in commandesGroupes) { %>
           <td>
             <div class="card">
-              <p>
-                <tr>
-                  <td>ID :</td>
-                  <td><%= commandes[i].id %></td>
-                </tr>
-              </p>
-              <p>
-                <tr>
-                  <td>Client ID :</td>
-                  <td><%= commandes[i].client_id %></td>
-                </tr>
-              </p>
-              <p>
-                <tr>
-                  <td>Vetement ID :</td>
-                  <td><%= commandes[i].vetement_id %></td>
-                </tr>
-              </p>
-              <p>
-                <tr>
-                  <td>Date de la commande :</td>
-                  <td><%= commandes[i].date_livraison %></td>
-                </tr>
-              </p>
+              <% for (let i = 0; i < commandesGroupes[numeroCommande].length; i++) { %>
+                <p>
+                  <tr>
+                    <td>Numéro de commande :</td>
+                    <td><%= numeroCommande %></td>
+                  </tr>
+                </p>
+                <p>
+                  <tr>
+                    <td>Vêtement ID :</td>
+                    <td><%= commandesGroupes[numeroCommande][i].vetement_id %></td>
+                  </tr>
+                  <tr>
+                    <td>Nom du vêtement :</td>
+                    <td><%= commandesGroupes[numeroCommande][i].nom %></td>
+                  </tr>
+                  <tr>
+                    <td>Prix du vêtement :</td>
+                    <td><%= commandesGroupes[numeroCommande][i].prix %></td>
+                  </tr>
+                </p>
+              <% } %>
               <p>
                 <form action="/gerant/supprimer-commande" method="POST">
-                  <input type="hidden" name="commandeId" value="<%= commandes[i].id %>" onsubmit="return confirmDelete();" >
+                  <input type="hidden" name="commandeId" value="<%= commandesGroupes[numeroCommande][0].numero_commande %>" onsubmit="return confirmDelete();" >
                   <button type="submit" style="background-color: red; color:white;">Supprimer</button>
-                  <!--Essayer d'implémenter une sorte d'alerte qui demander aux gérants une confirmation-->
+                  <!-- Essayer d'implémenter une sorte d'alerte qui demande aux gérants une confirmation -->
                   <script>
                     function confirmDelete() {
                       return window.confirm('Êtes-vous sûr de vouloir supprimer cette commande ?');

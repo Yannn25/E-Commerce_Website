@@ -70,9 +70,14 @@ function BDD_shop () {
     }
     this.idLogin = async function(email, mdp) {
         this.connect();
-        const query = await bdd.query('SELECT id FROM clients WHERE email = $1 AND mdp= $2', [email, mdp]);
-        return query.rows;
+        const query = await bdd.query('SELECT id FROM clients WHERE email = $1 AND mdp = $2', [email, mdp]);
+        if (query.rows.length > 0) {
+          return query.rows[0].id; // Retourne seulement l'ID du premier client trouvé
+        } else {
+          return null; // Aucun client trouvé
+        }
     }
+  
 
     //COMMANDES
     this.verifStocks = async function(id_vetement, taille, qte) {
@@ -92,8 +97,12 @@ function BDD_shop () {
     this.selectClient = async function(nom, mail) {
         this.connect();
         const query = await bdd.query('SELECT id FROM clients WHERE nom = $1 AND email = $2', [nom, mail]);
-        return query.rows;
-    }
+        if (query.rows.length > 0) {
+          return query.rows[0].id; // Retourne seulement l'ID du premier client trouvé
+        } else {
+          return null; // Aucun client trouvé
+        }
+      }
     this.insertDefaultClients = async function(nom,prenom,mail,adr) {
         this.connect();
         const query = await bdd.query('INSERT INTO clients(nom,prenom,email,adresse,mdp) VALUES ($1,$2,$3,$4,$5)', [nom, prenom, mail,adr ,"defaultmdp"]);
@@ -109,6 +118,27 @@ function BDD_shop () {
         const query = await bdd.query('SELECT * FROM favoris WHERE client_id=$1', [id_client]);
         return query.rows;
     }
-}
-
-module.exports = new BDD_shop();
+    this.infoClient = async function(id_client){
+        this.connect();
+        const query = await bdd.query('SELECT * FROM clients WHERE id=$1', [id_client]);
+        return query.rows;
+    }
+    this.addFav = async function(id_vetement, id_client) {
+        this.connect();
+        await bdd.query('INSERT INTO favoris(vetement_id,client_id) VALUES ($1,$2)', [id_vetement, id_client]);
+    }
+    this.supFav = async function(id_vetement, id_client) {
+        this.connect();
+        await bdd.query('DELETE FROM favoris WHERE vetement_id = $1 AND client_id = $2', [id_vetement, id_client]);
+    }
+    this.RecupVetementsFav = async function(id_client) {
+        this.connect();
+        const query = await bdd.query('SELECT vetements.* FROM vetements INNER JOIN favoris ON favoris.vetement_id = vetements.id_vetement WHERE favoris.client_id = $1', [id_client]);
+        return query.rows;
+    }
+    this.commandesClient = async function(id_client) {
+        this.connect();
+        const query = await bdd.query('SELECT * FROM commandes WHERE client_id = $1', [id_client]);
+        return query.rows;
+    }
+} module.exports = new BDD_shop();

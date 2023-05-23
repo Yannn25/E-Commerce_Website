@@ -69,151 +69,97 @@
                  </div>
             </div>
          </nav>
-        <section>
+         <section>
             <div class="Prcontainer">
-                <div class="row justify-content-center">
-                    <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
-                        <div class="card border-0 shadow">
-                            <div class="card-body p-1-9 p-xl-5">
-                                <div class="mb-4">
-                                    <h3 class="h4 mb-0">Nom</h3>
-                                </div>
-                                <ul class="list-unstyled mb-4">
-                                    <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i>exemplea@gmail.com</a></li>
-                                    <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>+012 (345) 6789</a></li>
-                                    <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>205 Main Street, USA</a></li>
-                                </ul>
-                
-                            </div>
-                        </div>
+              <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+                  <div class="card border-0 shadow">
+                    <div class="card-body p-1-9 p-xl-5">
+                      <div class="mb-4">
+                        <h3 class="h4 mb-0"><%= infoClient.nom %> <%= infoClient.prenom%></h3></h3>
+                      </div>
+                      <ul class="list-unstyled mb-4">
+                        <li class="mb-3">
+                          <a href="#!">
+                            <i class="far fa-envelope display-25 me-3 text-secondary"></i><%= infoClient.email %>
+                          </a>
+                        </li>
+                        <li class="mb-3">
+                          <a href="#!">
+                            <i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i><%= infoClient.adresse%>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#!">
+                            <i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>
+                          </a>
+                        </li>
+                      </ul>
                     </div>
-
-                    <div class="col-lg-8">
-                        <h1>Articles favoris</h1>
-                        <div class="ps-lg-1-6 ps-xl-5">
-                            <div class="row">
-                            <div class="col-md-3">
-                                 <!-- début produit-->
-                                 
-                                <div class="produit">
-                                    <div class="img-produit">
-                                        <a href="#"> 
-                                            <img class="imgp" src="../img/products_img/product-4.jpg" alt="4jpg" style="width:100%">
-                                        </a>
-                                    </div>
-                                    <div class="ecrit-produit">
-                                        <h3 class="nom produit">poo bleu</h3>
-                                        <p class="desc-produit">petit polo chic </p>
-                                    </div>
-                                    <div class="prix-produit">10€</div>
-                
-                                    <div class="icones-produit">
-                                        <a href="#">
-                                            <i class="bi bi-heart"></i>
-                                            <span class="product-tooltip">wishlist</span>
-                                        </a>
-                                        <a href="#">
-                                            <i class="bi bi-eye"></i>
-                                            <span class="product-tooltip">voir</span>
-                                        </a>
-                                        <a href="#">
-                                            <i class="bi bi-cart-plus-fill"></i>
-                                            <span class="product-tooltip">panier</span>
-                                        </a>
-                                    </div>
-                
-                                    <select id="taille-select">
-                                        <option value="null">--choisir une taille--</option>
-                                    
-                                      </select>
-                                </div>
-                                
-                                <!-- fin produit-->
+                  </div>
+                </div>
+          
+                <div class="col-lg-8">
+                  <h1>Articles favoris</h1>
+                  <div class="ps-lg-1-6 ps-xl-5">
+                    <div class="row">
+                      <% for (let i = 0; i < vetements.length; i++) { %>
+                        <div class="col-md-3">
+                          <div class="produit">
+                            <div class="img-produit">
+                              <a href="#">
+                                <img class="imgp" src="<%= vetements[i].image %>" alt="<%= vetements[i].nom %>" style="width:100%">
+                              </a>
                             </div>
-                            <div class="col-md-3">
-                                <!-- début produit-->
-                                
-                               <div class="produit">
-                                   <div class="img-produit">
-                                       <a href="#"> 
-                                           <img class="imgp" src="../img/products_img/product-4.jpg" alt="4jpg" style="width:100%">
-                                       </a>
-                                   </div>
-                                   <div class="ecrit-produit">
-                                       <h3 class="nom produit">poo bleu</h3>
-                                       <p class="desc-produit">petit polo chic </p>
-                                   </div>
-                                   <div class="prix-produit">10€</div>
-               
-                                   <div class="icones-produit">
-                                       <a href="#">
-                                           <i class="far fa-heart"></i>
-                                           <span class="product-tooltip">wishlist</span>
-                                       </a>
-                                       <a href="#">
-                                           <i class="bi bi-eye"></i>
-                                           <span class="product-tooltip">voir</span>
-                                       </a>
-                                       <a href="#">
-                                           <i class="bi bi-cart-plus-fill"></i>
-                                           <span class="product-tooltip">panier</span>
-                                       </a>
-                                   </div>
-               
-                                   <select id="taille-select">
-                                       <option value="null">--choisir une taille--</option>
-                                   
-                                     </select>
-                               </div>
-                               
-                               <!-- fin produit-->
-                           </div>
-                           
-                           <div class="col-md-3">
-                            <!-- début produit-->
-                            
-                           <div class="produit">
-                               <div class="img-produit">
-                                   <a href="#"> 
-                                       <img class="imgp" src="../img/products_img/product-4.jpg" alt="4jpg" style="width:100%">
-                                   </a>
-                               </div>
-                               <div class="ecrit-produit">
-                                   <h3 class="nom produit">poo bleu</h3>
-                                   <p class="desc-produit">petit polo chic </p>
-                               </div>
-                               <div class="prix-produit">10€</div>
-           
-                               <div class="icones-produit">
-                                   <a href="#">
-                                       <i class="far fa-heart"></i>
-                                       <span class="product-tooltip">wishlist</span>
-                                   </a>
-                                   <a href="#">
-                                       <i class="bi bi-eye"></i>
-                                       <span class="product-tooltip">voir</span>
-                                   </a>
-                                   <a href="#">
-                                       <i class="bi bi-cart-plus-fill"></i>
-                                       <span class="product-tooltip">panier</span>
-                                   </a>
-                               </div>
-           
-                               <select id="taille-select">
-                                   <option value="null">--choisir une taille--</option>
-                               
-                                 </select>
-                           </div>
-                           
-                           <!-- fin produit-->
-                       </div>
-                       
-                            
+                            <div class="ecrit-produit">
+                              <h3 class="nom-produit"><%= vetements[i].nom %></h3>
+                              <p class="desc-produit"><%= vetements[i].description %></p>
                             </div>
+                            <div class="prix-produit"><%= vetements[i].prix %></div>
+          
+                            <div class="icones-produit">
+                              <form action="/supFav" method="POST">
+                                <button type="submit">
+                                  <i class="far fa-heart"></i>
+                                  <span class="product-tooltip">wishlist</span>
+                                </button>
+                                <input type="hidden" name="id_vetement" value="<%= vetements[i].id_vetement %>">
+                                <input type="hidden" name="id_client" value="<%= infoClient.id %>">
+                              </form>
+          
+                              <a href="#">
+                                <i class="bi bi-eye"></i>
+                                <span class="product-tooltip">voir</span>
+                              </a>
+          
+                              <form action="/addPanier" method="POST">
+                                <button type="submit">
+                                  <i class="bi bi-cart-plus-fill"></i>
+                                  <span class="product-tooltip">panier</span>
+                                </button>
+                                <select name="taille" id="taille-select">
+                                  <% for (let j = 0; j < tailles.length; j++) { %>
+                                    <% if (tailles[j].quantite > 0 && tailles[j].id == vetements[i].id_vetement) { %> 
+                                      <option value="<%= tailles[j].taille %>"><%= tailles[j].taille %></option>
+                                    <% } %>
+                                  <% } %>
+                                </select>
+                                <input type="hidden" name="id" value="<%= vetements[i].id_vetement %>">
+                                <input type="hidden" name="nom" value="<%= vetements[i].nom %>">
+                                <input type="hidden" name="prix" value="<%= vetements[i].prix %>">
+                                <input type="hidden" name="quantite" value="1">
+                              </form>
+                            </div>
+                          </div>
                         </div>
+                      <% } %>
                     </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
+          </section>
+          
 
 
 
