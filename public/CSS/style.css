@@ -355,6 +355,23 @@ section{
     position: relative;
 
 }
+
+.icones-produit button{
+    height: 40px;
+    width: 40px;
+    background-color: #283149;
+    box-shadow: 0 0 5px #283149;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: #DBEDF3;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+
+}
 .product-tooltip{
     position: absolute;
     top: 50%;
@@ -384,14 +401,24 @@ section{
     .icones-produit a:hover .product-tooltipip{
         opacity: 1;
         transform: translate(-10px,-50%);
+    }.icones-produit button:hover .product-tooltipip{
+        opacity: 1;
+        transform: translate(-10px,-50%);
     }
 
     .icones-produit a{
         opacity: 0;
         transform: translateY(10px);
     }
+    .icones-produit button{
+        opacity: 0;
+        transform: translateY(10px);
+    }
 
     .produit:hover .icones-produit a{
+        opacity: 1;
+    }
+    .produit:hover .icones-produit button{
         opacity: 1;
     }
 }
