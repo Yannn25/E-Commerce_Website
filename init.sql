@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS clients (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     prenom VARCHAR(255) ,
-    email VARCHAR(255),
+    email VARCHAR(255) NOT NULL,
     adresse VARCHAR(255),
     ville VARCHAR(255),
     code_postal VARCHAR(10),

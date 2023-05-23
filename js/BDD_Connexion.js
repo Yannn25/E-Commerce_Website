@@ -39,6 +39,11 @@ function BDD_shop () {
         const query = await bdd.query('SELECT * FROM gerants WHERE nom = $1 AND mot_de_passe = $2', [nom, mdp]);
         return query.rowCount;
     }
+    this.gerantID = async function(nom) {
+        this.connect();
+        const query = await bdd.query('SELECT id FROM gerants WHERE nom = $1', [nom]);
+        return query.rows;
+    }
     this.AjoutStock = async function(id_vetement, quantite, taille) {
         this.connect();
         const query = await bdd.query('INSERT INTO stocks(id,taille,quantite) VALUES($1, $2, $3)', [id_vetement, taille, quantite]);
@@ -63,6 +68,11 @@ function BDD_shop () {
         this.connect();
         const query = await bdd.query('INSERT INTO clients(nom,prenom,email,mdp) VALUES ($1,$2,$3,$4)', [nom,prenom, mail, pswd]);
     }
+    this.idLogin = async function(email, mdp) {
+        this.connect();
+        const query = await bdd.query('SELECT id FROM clients WHERE email = $1 AND mdp= $2', [email, mdp]);
+        return query.rows;
+    }
 
     //COMMANDES
     this.verifStocks = async function(id_vetement, taille, qte) {
@@ -82,7 +92,7 @@ function BDD_shop () {
     this.selectClient = async function(nom, mail) {
         this.connect();
         const query = await bdd.query('SELECT id FROM clients WHERE nom = $1 AND email = $2', [nom, mail]);
-        return query.row;
+        return query.rows;
     }
     this.insertDefaultClients = async function(nom,prenom,mail,adr) {
         this.connect();
@@ -91,6 +101,13 @@ function BDD_shop () {
     this.passCommand = async function(id_client, id_vetement, date_cmd, taille,qte, num_cmd) {
         this.connect();
         const query = await bdd.query('INSERT INTO commandes(client_id, vetement_id, date_livraison, quantite, taille, numero_commande) VALUES ($1,$2,$3,$4,$5,$6)', [id_client,id_vetement,date_cmd,qte,taille,num_cmd]);
+    }
+
+    //FAVORIS
+    this.allFavoris = async function(id_client){
+        this.connect();
+        const query = await bdd.query('SELECT * FROM favoris WHERE client_id=$1', [id_client]);
+        return query.rows;
     }
 }
 
