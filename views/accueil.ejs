@@ -12,6 +12,7 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
       <!-- CSS et JS -->
       <link rel="stylesheet" href="../CSS/bootstrap.css">
+      <link rel="stylesheet" href="../CSS/style.css">
       
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
       <script src="../js/server.js"></script>
@@ -58,7 +59,7 @@
                       <p class="desc-produit"> <%= contenus[i].description %> </p>
                     </div>
                     <div class="prix-produit"><%= contenus[i].prix %></div>
-                    <form action="/addPanier" method="POST">
+                    
                     <div class="icones-produit">
                         <a href="#">
                             <i class="far fa-heart"></i>
@@ -68,6 +69,7 @@
                             <i class="bi bi-eye"></i>
                             <span class="product-tooltip">voir</span>
                         </a>
+                        <form action="/addPanier" method="POST"></form>
                         <button>
                             <i class="bi bi-cart-plus-fill"></i>
                             <span class="product-tooltip">panier</span>

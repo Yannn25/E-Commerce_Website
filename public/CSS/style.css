@@ -339,7 +339,7 @@ section{
     display: flex;
     flex-direction: column;
 }
-.icones-produit a{
+.icones-produit a, .icones-produit button{
     height: 40px;
     width: 40px;
     background-color: #283149;
@@ -355,6 +355,24 @@ section{
     position: relative;
 
 }
+.icones-produit button{
+    margin-top: 5px;
+    height: 40px;
+    width: 40px;
+    background-color: #283149;
+    box-shadow: 0 0 5px #283149;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: #DBEDF3;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+
+}
+
 .product-tooltip{
     position: absolute;
     top: 50%;
@@ -385,16 +403,27 @@ section{
         opacity: 1;
         transform: translate(-10px,-50%);
     }
+    .icones-produit button:hover .product-tooltipip{
+        opacity: 1;
+        transform: translate(-10px,-50%);
+    }
 
-    .icones-produit a{
+    .icones-produit a {
         opacity: 0;
         transform: translateY(10px);
     }
-
+    .icones-produit button{
+        opacity: 0;
+        transform: translateY(10px);
+    }
     .produit:hover .icones-produit a{
         opacity: 1;
     }
+    .produit:hover .icones-produit button{
+        opacity: 1;
+    }
 }
+
 
 /*login*/
 
@@ -414,24 +443,8 @@ form::placeholder{
     color: var(--light-color);
 }
 
-form button{
-    background-color: var(--main-color);
-    color: white;
-    width: 100%;
-    margin: 20px 0;
-    border: 0;
-    line-height: 42px;
-    border-radius: 7px ;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .4s ease-out;
-    -webkit-transform: all .3s ease-out;
 
-}
 
-button:hover{
-    background-color: var(--dark-color);
-}
 
 .afterform{
     text-align: center;
@@ -445,24 +458,7 @@ form .check{
     float: left; 
 }
 
-form .check input{
-     position: absolute;
-     left: 0;
-     top: 4px;
-}
 
-form .forgot{
-    float: right;
-    font-size: 12px;
-}
-
-form label a, .afterform a{
-    color: var(--dark-color);
-}
-
-form :is(p,label) a:hover, .afterform a:hover{
-    
-}
 
 .Lcontainer {
     background-color: #8D7B68;
