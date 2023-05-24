@@ -124,7 +124,7 @@ nav{
     display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 991px) {
     nav{
         padding: 15px 20px;
         position: relative;
@@ -219,6 +219,9 @@ a{
     .open{
         transform: translate(0%);
     }
+
+    
+    
 }
 
 /*
@@ -289,6 +292,7 @@ section{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 50px 30px;
+    margin: 5px;
 }
 .produit{
     background-color: #FFFAF4;
@@ -430,7 +434,7 @@ section{
 
 form input:not(#terms,#remember){
     font-family: inherit;
-    width: 100%;
+    width: 75%;
     outline: 0;
     margin: 0 0 20px;
     padding: 10px 15px;
@@ -442,7 +446,6 @@ form input:not(#terms,#remember){
 form::placeholder{
     color: var(--light-color);
 }
-
 
 
 
@@ -576,7 +579,7 @@ form .check{
     display: flex;
 }
 
-/* Pour les écran à partir de 768px*/
+/* Pour les écran à partir de 768px*//*
 @media screen and (min-width: 768px) {
     .wrapper>div{
         flex-direction: row;
@@ -608,3 +611,152 @@ form .check{
     }
 }
 
+/*nouveau login*/
+
+.log-container{
+    position: relative;
+    width: 800px;
+    height: 500px;
+    left: 25%;
+    justify-content: center;
+    align-items: center;
+}
+.Bluebg{
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #27374D;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.Bluebg .box{
+    position: relative;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Bluebg .box h2{
+    color: #fff; 
+    font-size: 1.2em; 
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.Bluebg .box button{
+    cursor: pointer;
+    padding: 10px 20px;
+    background:#fff;
+    color: 口#333;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+}
+
+.formBx{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    transition: 0.5s ease-in-out;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow: hidden;
+}
+
+.formBx.active{
+    left: 50%;
+}
+.formBx .form{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 50px;
+    transition: 0.5s;
+
+}
+.formBx .signUpForm{
+    left: -100%;
+}
+.formBx.active .signUpForm{
+    left: 0%;
+    transition-delay: 0s;
+}
+.formBx .signUpForm{
+    transition-delay: 0.25s;
+}
+.formBx .signInForm{
+    transition-delay: 0.25s;
+}
+.formBx.active .signInForm{
+    left: -100%;
+    transition-delay: 0s;
+}
+.formBx .form form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.formBx.form form input{
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+    border: 1px solid #333;
+
+}
+.formBx .form form input [type="submit"]{
+    background-color: #2D4059;
+}
+
+@media (max-width:991px) {
+    .log-container{
+        max-width: 400px;
+        height: 650px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .log-container .Bluebg{
+        top: 0;
+        height: 100%;
+        
+
+    }
+
+    .formBx{
+        width: 100%;
+        height: 500px;
+        top: 0;
+        box-shadow: none;
+    }
+
+    .Bluebg .box{
+        position: absolute;
+        width: 100%;
+        height: 150px;
+        bottom: 0;
+    }
+
+    .box.signin{
+        top: 0;
+    }
+
+    .formBx.active{
+        left: 0;
+        top: 150px;
+    }
+}

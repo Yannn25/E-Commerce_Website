@@ -64,87 +64,50 @@
             </div>
          </nav>
 
-        <form action="/login" method="POST">
-           
-                <div id="page" class="site">
-                    <div class="Lcontainer">
-                        <div class="wrapper">
-                            <div class="login">
-                                <div class="content-heading">
-                                    <div class="y-style">
-                                        <div class="logo"><a href="#">.FRIP<span>erie</span></a>
-                                            <div class="welcome">
-                                                <h2>Welcome<br>Back !</h2>
-                                                <p>Le shopping écologique et économique</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content-form">
-                                    <div class="y-style">
-                                        <form action="/login" method="POST">
-                                            <p>
-                                                <label>Email</label> <input type="email" name="email" id="" placeholder="Enter your email" required>
-                                            </p>
-                                            <p>
-                                                <label>Password</label> <input type="password" name="password" id="" placeholder="Enter your pasword" required>
-                                            </p>
-                                            <p class="check">
-                                                <input type="checkbox"id="remember">
-                                            <label for="remember">remember me</label> </p>
-                                            <p class="forgot"> <a href="#">Forgot password</a></p>
-                                            <p> <button type="submit">GO</button> </p>
-                                        </form>
-                                        </form>
-                                        <div class="afterform">
-                                            <p>Pas de compte ?  <a href="#" class="t-signup">S'inscrire</a></p>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- login form-->
+        <section class="Logsection">
+            <div class="log-container">
+                <div class="Bluebg">
+                    <div class="box signin">
+                        <h2>Déjà un compte?</h2>
+                        <button class="signinBtn">Sign in</button>
+                    </div>
 
-                            <div class="signup">
-                                <div class="content-heading">
-                                    <div class="y-style">
-                                        <div class="logo"><a href="#">FRIP<span></span></a>
-                                            <div class="welcome">
-                                                <h2>Inscrit toi<br>Maintenant !</h2>
-                                                <p style="color: #F6F1E9;">Le shopping écologique et économique</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content-form">
-                                    <div class="y-style">
-                                        <form action="/signUp" method="post">
-                                            <p>
-                                                <label>Full name</label> <input type="text" name="fullName" id="" placeholder="Enter your name" required>
-                                            </p>
-                                            <p>
-                                                <label>Email</label> <input type="email" name="email" id="" placeholder="Enter your email" required>
-                                            </p>
-                                            <p>
-                                                <label>Password</label> <input type="password" name="password" id="" placeholder="Enter your pasword" required>
-                                            </p>
-                                            <p class="check">
-                                                <input type="checkbox"id="terms" required> <label for="terms">accepter les <a href="#">conditions d'utilisation</a> </label> 
-                                            </p>
-                                            <p> <button type="submit">GO</button> </p>
-                                        </form>
-                                        <div class="afterform">
-                                            <p>Déja un compte ? </p>
-                                            <a href="#" class="t-login">Se connecter</a>                                          
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- Sign up form-->
-                        </div>
+                    <div class="box signup">
+                        <h2>Pas de compte?</h2>
+                        <button class="signupBtn">Sign in</button>
                     </div>
                 </div>
-        </form>
+                <div class="formBx">
+                    
+                    <div class="form signInForm" id="connect">
+                        
+                        <form action="">
+                            <h3>Se connecter</h3>
+                            <input type="email" placeholder="exemple@gmail.com"  id="mail" required>
+                            <input type="password" placeholder="mot de passe"  id="mdp" required>
+                            <input type="submit" value="Login">
+                            <a href="#" class="oubli">mot de passe oublié</a>
+                        </form>
+                        <div id="error-message" class="alert alert-danger" style="display: none;">
+                            <strong>Erreur :</strong> Veuillez remplir tous les champs.
+                        </div>
+                    </div>
 
-
+                    <div class="form signUpForm">
+                        <form action="">
+                            <h3>S'inscrire</h3>
+                            <input type="text" placeholder="Nom" required>
+                            <input type="text" id="address" name="address" placeholder="Entrez votre adresse complète" required>
+                            <input type="email" placeholder="exemple@gmail.com"  id="mail" required>
+                            <input type="password" placeholder="mot de passe"  id="mdp" required>
+                            <input type="password" placeholder="confirmer le mot de passe"  id="mdpconfirm" required>
+                            <input type="submit" value="Login">
+                        </form>
+                    </div>
+                </div>
+             </div>
+        </section>
+         
           
 
         <footer class="text-center">
@@ -167,5 +130,7 @@
             </div>
             <p>Website made By Emmou Coffi Marie-Tiffany & Edikeu Yann  &copy; 2023 </p>  
         </footer> 
+
+        <script src="../login.js"></script>
     </body>
 </html>

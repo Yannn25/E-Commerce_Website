@@ -23,15 +23,34 @@ new ResizeObserver(entries => {
 	}
 	
 }).observe(document.body)
-const signUp =  document.querySelector('.t-signup');
-const logIn = document.querySelector('.t-login');
-const addclass = document.querySelector('.site')
 
-signUp.addEventListener('click',function () {
-  addclass.className = 'site signup-show'
-})
-logIn.addEventListener('click',function () {
-  addclass.className = 'site login-show'
-})
 
 /* si on clique sur envoyer mais qu'il y une erreur/champ manquant on envoie le warning */
+const form = document.getElementById('connect').addEventListener('submit', function(event) {
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const errorMessage = document.getElementById('error-message');
+    
+    if (!nameInput.value || !emailInput.value) {
+      errorMessage.style.display = 'block';
+      event.preventDefault(); 
+    } else {
+      errorMessage.style.display = 'none';
+      
+    }
+  });
+
+/*transitions */
+const body = document.querySelector('body')
+const signInBtn = document.querySelector('.signinBtn')
+const signUpBtn = document.querySelector('.signupBtn')
+const formBx = document.querySelector('.formBx')
+
+signUpBtn.onclick = function(){
+	formBx.classList.add('active')
+	body.classList.add('active')
+}
+signInBtn.onclick = function(){
+	formBx.classList.remove('active')
+	body.classList.remove('active')
+}
