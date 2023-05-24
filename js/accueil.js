@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
     var ConnectButton = document.getElementById("SwitchtoConnexion");
     console.log("page accueil")
     //var ConnectButton = document.getElementById("SwitchtoConnexion");
