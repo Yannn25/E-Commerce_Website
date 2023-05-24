@@ -1,4 +1,5 @@
 const BDD_shop = require('./BDD_Connexion');
+const Panier = require('./panier.js');
 
 async function run() {
   const hostname = 'localhost';
@@ -6,6 +7,7 @@ async function run() {
   const express = require("express");
   const server = new express();
   const bodyParser = require('body-parser');
+  const process = require('process');
   server.use(bodyParser.json());
   server.use(express.json());
   server.use(express.urlencoded({extended:true}));
@@ -14,8 +16,8 @@ async function run() {
   server.set('view engine', 'ejs');
   server.use(express.static('js'));
 
-  //server.set('view engine', 'html');
-  //server.engine('html', require('ejs').renderFile);
+
+  
   await BDD_shop.connect();      
   async function RecupVetements() {
     const vetements = await BDD_shop.recupererVetements();
@@ -23,10 +25,10 @@ async function run() {
   }
   server.get('/', async (req,res) => {
     const contenus = await RecupVetements();  
-    //console.log(contenus);
     const tailles = await BDD_shop.recupererTaillesDisponibles();
-    res.render('pages/index.ejs', { contenus, tailles });
+    res.render('accueil.ejs', { contenus, tailles });
   });
+
   server.get('/product:id', async (req,res) => {
     const id = req.params.id;
   });
@@ -38,9 +40,38 @@ async function run() {
   server.get('/login', (req,res) => {
     res.render('login');
   });
-  server.post('/loginUser', (req,res) => {
-    res.render('login.ejs');
+  server.post('/login', async (req,res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    console.log(email, password);
+    const exits = await BDD_shop.Login(email, password);
+    console.log(exits);
+    console.log(exits == 1);
+    if(exits == 1) {
+       res.redirect('/');
+    } else {
+        res.render('login.ejs');//tenter un msg d'erreur
+    }
   });
+  server.post('/signUp', async (req,res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    // Vérifier si l'utilisateur existe déjà
+    const userExists = await BDD_shop.Login(email, password);
+    if (userExists == 1) {
+      // L'utilisateur existe déjà, gérer le cas en conséquence
+      res.render('login.ejs', { error: 'User already exists' });
+      return;
+    }
+    const fullName = req.body.fullName;
+    // Divise la chaîne fullName en nom et prénom
+    const nameParts = fullName.split(' ');
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(' ');
+    const exits = await BDD_shop.SignUp(firstName, lastName,email, password);
+    res.redirect('/favoris');
+  });
+
   server.post('/gerant', async (req,res) => {
     let {nom, mdp} = req.body;
     //console.log({nom,mdp});
@@ -48,11 +79,12 @@ async function run() {
     //console.log(exits);
     //console.log(exits == 1);
     //if(exits == 1) {
-       res.redirect('/gerant/stocks');
+      res.redirect('/gerant/stocks');
     //  } else {
     //    res.render('Gerant.ejs', {connect : true});
     // }
   });
+
   server.get('/gerant/stocks', async (req, res) => {
     const contenus = await RecupVetements();
     res.render('Gerant.ejs', { connect : true,stocks: true, contenus });
@@ -62,12 +94,6 @@ async function run() {
     const quantite = req.body.quantite; 
     const taille = req.body.taille;
     console.log('id : %d\nquant: %d\ntaille: %s\n', idVetement, quantite, taille);
-
-    if (quantite === '' || isNaN(parseInt(quantite))) {
-      console.error('La quantité fournie est invalide.');
-      res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
-      return;
-    }
     try {
       await BDD_shop.AjoutStock(idVetement, quantite, taille);
       res.redirect('/gerant/stocks');
@@ -76,8 +102,6 @@ async function run() {
       res.redirect('/gerant/stocks'); // Rediriger vers la page des stocks en cas d'erreur
     }
   });
-  
-  
   
   server.get('/gerant/commandes', async (req, res) => {
     const commandes = await BDD_shop.AllCommands();
@@ -91,9 +115,42 @@ async function run() {
     //307 pour redirect avec post
   });
   
-  server.get('/panier', (req,res) => {
-    res.render('panier.ejs');
+  process.on('beforeExit', () => {
+    localStorage.clear();
   });
+  server.get('/panier', (req,res) => {
+    const panier = new Panier();
+    console.log(panier);
+    const prixTotal = panier.getPrixTotal();
+    console.log(prixTotal);
+    res.render('panier.ejs', {panier, prixTotal});
+  });
+  server.post('/addPanier', (req, res) => {
+    // Récupérer les données du produit à ajouter au panier depuis la requête
+    const produit = {
+      id: req.body.id,
+      nom: req.body.nom,
+      prix: req.body.prix,
+      qte: req.body.quantite,
+      taille: req.body.taille,
+    };
+    console.log(produit);
+    const panier = new Panier();
+    panier.addProduitPanier(produit);
+    panier.savePanier();
+    res.redirect('/panier')
+  });
+  server.post('/updateQuantity', (req, res) => {
+    const qte = parseInt(req.body.qte);
+    const productId  = req.body.id;
+    console.log(productId, qte);
+    const panier = new Panier();
+    // Mettre à jour la quantité du produit dans le panier
+    panier.changeQuantite(productId,qte);
+    panier.savePanier();
+    res.redirect('/panier');
+  });
+
   server.get('/favoris', (req,res) => {
     res.render('favoris.ejs');
   });
@@ -101,8 +158,6 @@ async function run() {
   server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
   });
-
-
 }
 run();
 
