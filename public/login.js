@@ -33,7 +33,7 @@ const form = document.getElementById('connect').addEventListener('submit', funct
     
     if (!nameInput.value || !emailInput.value) {
       errorMessage.style.display = 'block';
-      event.preventDefault(); // Empêche la soumission du formulaire
+      event.preventDefault(); 
     } else {
       errorMessage.style.display = 'none';
       
